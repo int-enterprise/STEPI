@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+:root {
+  /* Base */
+  --app-bg: #f6f7fb;
+  --surface: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+
+  /* Borders / radius */
+  --border: rgba(17, 24, 39, 0.10);
+  --border-strong: rgba(17, 24, 39, 0.14);
+  --radius: 14px;
+
+  /* Pastel accents (sample-like) */
+  --accent-rose: #f6c6d2;
+  --accent-rose-bg: #fff3f7;
+  --accent-amber: #f4d7a1;
+  --accent-amber-bg: #fff6e8;
+  --accent-sky: #b9daf8;
+  --accent-sky-bg: #f2f8ff;
+
+  /* Chart palette */
+  --chart-1: #4f8bd6;
+  --chart-2: #e56a8a;
+  --chart-3: #f1b04a;
+  --chart-grid: rgba(17, 24, 39, 0.08);
+}
+
+@theme inline {
+  --color-background: var(--app-bg);
+  --color-foreground: var(--text);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--app-bg);
+  color: var(--text);
+}
+
+/* Subtle dotted grid 느낌 (샘플과 유사한 밝은 패널 배경) */
+.app-grid-bg {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(17, 24, 39, 0.06) 1px, transparent 0);
+  background-size: 18px 18px;
+  background-position: 0 0;
+}
+
+/* Scrollbar: 얇고 정돈된 느낌 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(17, 24, 39, 0.18) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(17, 24, 39, 0.16);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}

@@ -1,0 +1,19 @@
+
+> stepi@0.1.0 dev C:\Users\jinoo\OneDrive\Desktop\develop\STEPI
+> next dev "--hostname" "127.0.0.1" "--port" "3000"
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://127.0.0.1:3000
+- Network:       http://127.0.0.1:3000
+
+✓ Starting...
+Creating turbopack project {
+  dir: 'C:\\Users\\jinoo\\OneDrive\\Desktop\\develop\\STEPI',
+  testMode: true
+}
+✓ Ready in 7s
+○ Compiling / ...
+ GET / 200 in 10.5s (compile: 9.5s, render: 955ms)
+ GET /login 200 in 3.0s (compile: 2.9s, render: 58ms)
+ GET /login 200 in 241ms (compile: 22ms, render: 219ms)
+ GET /login 200 in 179ms (compile: 12ms, render: 167ms)

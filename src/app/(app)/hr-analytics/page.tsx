@@ -1,135 +1,153 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState } from "react";
+import {
+  BarChart3,
+  Brain,
+  ShieldCheck,
+  Sparkles,
+  Users,
+} from "lucide-react";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, LineChart, Line } from "recharts";
-import { ClientOnly } from "@/components/utils/ClientOnly";
+import { Tabs } from "@/components/hr-analytics/Tabs";
+import {
+  Turing10Panel,
+  Turing30Panel,
+  Turing50Panel,
+} from "@/components/hr-analytics/TuringPanels";
+import { MOCK_HR_EVALUATION } from "@/data/hr-analytics";
+
+const TAB_META = {
+  turing10: {
+    title: "Turing 1.0",
+    description: "핵심 벤치마크, 역량 프로파일, 스크리닝 품질 결과",
+  },
+  turing30: {
+    title: "Turing 3.0",
+    description: "업무 시나리오 적합도, 협업 행동, 운영 안정성 결과",
+  },
+  turing50: {
+    title: "Turing 5.0",
+    description: "비즈니스 효과, 거버넌스 리스크, 배포 권고안",
+  },
+} as const;
 
 export default function HrAnalyticsPage() {
-  const beforeAfter = useMemo(
-    () => [
-      { k: "평균 검토 시간(분)", before: 45, after: 8 },
-      { k: "월 처리 이력서", before: 210, after: 520 },
-      { k: "채용 리드타임(일)", before: 28, after: 19 },
-      { k: "수작업 비율(%)", before: 72, after: 18 },
-    ],
-    []
-  );
+  const [activeTab, setActiveTab] = useState<keyof typeof TAB_META>("turing10");
 
-  const cumulative = useMemo(() => {
-    const out: Array<{ m: string; saved: number }> = [];
-    let sum = 0;
-    for (let i = 1; i <= 12; i++) {
-      // deterministic "noise" (lint: render purity)
-      const noise = ((i * 9301 + 49297) % 233280) / 233280; // 0~1
-      sum += 18 + Math.round(Math.sin(i / 2.2) * 4) + Math.round(noise * 3);
-      out.push({ m: `${i}월`, saved: sum });
-    }
-    return out;
-  }, []);
-
-  const cards = [
-    { title: "기존 인사 담당", value: "4명", sub: "수작업 중심" },
-    { title: "도입 후 필요 인력", value: "1.5명", sub: "실질 필요" },
-    { title: "절감률", value: "62.5%", sub: "업무 절감" },
-    { title: "월 절감 시간", value: "320시간", sub: "예상치" },
+  const tabs = [
+    {
+      id: "turing10",
+      label: "Turing 1.0",
+      icon: <Brain className="h-4 w-4" />,
+      description: "역량 점수와 벤치마크 근거",
+    },
+    {
+      id: "turing30",
+      label: "Turing 3.0",
+      icon: <Users className="h-4 w-4" />,
+      description: "업무 시뮬레이션과 협업 품질",
+    },
+    {
+      id: "turing50",
+      label: "Turing 5.0",
+      icon: <BarChart3 className="h-4 w-4" />,
+      description: "ROI, 거버넌스, 배포 준비도",
+    },
   ];
 
+  const activeMeta = TAB_META[activeTab];
+
   return (
-    <div className="space-y-3">
-      <div className="grid grid-cols-4 gap-3">
-        {cards.map((c) => (
-          <Card key={c.title} tone="sky">
-            <CardBody className="py-4">
-              <div className="text-[12px] text-[var(--muted)]">{c.title}</div>
-              <div className="mt-1 text-2xl font-semibold text-[#111827]">
-                {c.value}
-              </div>
-              <div className="mt-1 text-[11px] text-[rgba(17,24,39,0.60)]">
-                {c.sub}
-              </div>
-            </CardBody>
-          </Card>
-        ))}
+    <div className="space-y-4">
+      <div className="space-y-4">
+        <Tabs tabs={tabs} value={activeTab} onChange={(value) => setActiveTab(value as keyof typeof TAB_META)} />
+
+        <Card>
+          <CardHeader title={activeMeta.title} sub={activeMeta.description} />
+          <CardBody className="pt-0">
+            {activeTab === "turing10" ? (
+              <Turing10Panel data={MOCK_HR_EVALUATION.turing10} />
+            ) : null}
+            {activeTab === "turing30" ? (
+              <Turing30Panel data={MOCK_HR_EVALUATION.turing30} />
+            ) : null}
+            {activeTab === "turing50" ? (
+              <Turing50Panel report={MOCK_HR_EVALUATION} />
+            ) : null}
+          </CardBody>
+        </Card>
       </div>
 
-      <div className="grid grid-cols-[1fr_420px] gap-3">
-        <Card>
-          <CardHeader
-            title="Before / After 비교"
-            sub="AI 도입 전후 핵심 지표 변화"
-            right={<Button size="xs">상세</Button>}
-          />
-          <CardBody className="pt-0">
-            <div className="h-[320px] rounded-[14px] border border-[var(--border)] bg-white px-4 py-3">
-              <ClientOnly fallback={<div className="h-full w-full" />}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={beforeAfter} margin={{ top: 10, right: 10, bottom: 10, left: 0 }}>
-                    <CartesianGrid stroke="var(--chart-grid)" strokeDasharray="3 3" />
-                    <XAxis dataKey="k" tick={{ fontSize: 10, fill: "rgba(17,24,39,0.65)" }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fontSize: 10, fill: "rgba(17,24,39,0.45)" }} axisLine={false} tickLine={false} />
-                    <Tooltip
-                      contentStyle={{
-                        borderRadius: 12,
-                        border: "1px solid rgba(17,24,39,0.12)",
-                        boxShadow: "0 12px 30px rgba(17,24,39,0.12)",
-                      }}
-                    />
-                    <Bar dataKey="before" name="Before" fill="rgba(17,24,39,0.18)" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="after" name="After" fill="var(--chart-1)" radius={[8, 8, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </ClientOnly>
+      <div className="grid gap-4 xl:grid-cols-2">
+        <Card tone="sky">
+          <CardHeader title="평가 정보" sub="현재 화면에서 사용하는 mock 기준" />
+          <CardBody className="grid gap-4 pt-0 sm:grid-cols-2 xl:grid-cols-4">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
+                Model
+              </p>
+              <p className="mt-1 text-sm font-medium text-[#111827]">
+                {MOCK_HR_EVALUATION.summary.modelName}
+              </p>
+              <p className="mt-1 text-xs text-[var(--muted)]">
+                v{MOCK_HR_EVALUATION.summary.version}
+              </p>
+            </div>
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
+                Evaluator
+              </p>
+              <p className="mt-1 text-sm font-medium text-[#111827]">
+                {MOCK_HR_EVALUATION.summary.evaluator}
+              </p>
+            </div>
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
+                Status
+              </p>
+              <p className="mt-1 text-sm font-medium text-[#111827]">
+                {MOCK_HR_EVALUATION.summary.status}
+              </p>
+            </div>
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
+                Percentile
+              </p>
+              <p className="mt-1 text-sm font-medium text-[#111827]">
+                {MOCK_HR_EVALUATION.overall.percentile}th percentile
+              </p>
             </div>
           </CardBody>
         </Card>
 
         <Card tone="amber">
-          <CardHeader title="ROI 스냅샷" sub="투자 대비 효율(목데이터)" />
-          <CardBody className="pt-0">
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { k: "AI 자동 평가 비율", v: "78%" },
-                { k: "질문 자동 생성 수", v: "1,240개/월" },
-                { k: "리드타임 감소율", v: "32%" },
-                { k: "생산성 향상률", v: "2.6x" },
-              ].map((m) => (
-                <div key={m.k} className="rounded-[14px] border border-[var(--border)] bg-white px-4 py-3">
-                  <div className="text-[12px] text-[var(--muted)]">{m.k}</div>
-                  <div className="mt-1 text-xl font-semibold text-[#111827]">{m.v}</div>
-                </div>
-              ))}
+          <CardHeader title="핵심 메모" sub="눈여겨볼 만한 요약 정보" />
+          <CardBody className="grid gap-4 pt-0 md:grid-cols-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-[#4f8bd6]" />
+                <p className="text-sm font-semibold text-[#111827]">배포 메모</p>
+              </div>
+              <p className="mt-1 text-xs leading-6 text-[var(--muted)]">
+                {MOCK_HR_EVALUATION.overall.hiringImpact}
+              </p>
             </div>
-
-            <div className="mt-3 rounded-[14px] border border-[var(--border)] bg-white px-4 py-3">
-              <div className="flex items-center justify-between">
-                <div className="text-[12px] font-semibold text-[#111827]">
-                  누적 절감 시간(월)
-                </div>
-                <Badge variant="muted">최근 12개월</Badge>
+            <div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-[#e56a8a]" />
+                <p className="text-sm font-semibold text-[#111827]">Target use case</p>
               </div>
-              <div className="mt-2 h-[180px]">
-                <ClientOnly fallback={<div className="h-full w-full" />}>
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={cumulative} margin={{ top: 10, right: 10, bottom: 0, left: -10 }}>
-                      <CartesianGrid stroke="var(--chart-grid)" strokeDasharray="3 3" />
-                      <XAxis dataKey="m" tick={{ fontSize: 10, fill: "rgba(17,24,39,0.65)" }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fontSize: 10, fill: "rgba(17,24,39,0.45)" }} axisLine={false} tickLine={false} />
-                      <Tooltip
-                        formatter={(v: unknown) => [`${v}시간`, "누적 절감"]}
-                        contentStyle={{
-                          borderRadius: 12,
-                          border: "1px solid rgba(17,24,39,0.12)",
-                          boxShadow: "0 12px 30px rgba(17,24,39,0.12)",
-                        }}
-                      />
-                      <Line type="monotone" dataKey="saved" stroke="var(--chart-3)" strokeWidth={2.5} dot={false} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </ClientOnly>
-              </div>
+              <p className="mt-1 text-xs leading-6 text-[var(--muted)]">
+                {MOCK_HR_EVALUATION.summary.useCase}
+              </p>
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-[#111827]">기관</p>
+              <p className="mt-1 text-xs leading-6 text-[var(--muted)]">
+                {MOCK_HR_EVALUATION.summary.organization}
+              </p>
             </div>
           </CardBody>
         </Card>
@@ -137,4 +155,3 @@ export default function HrAnalyticsPage() {
     </div>
   );
 }
-

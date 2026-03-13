@@ -36,7 +36,7 @@ const DEFAULTS: Settings = {
   sensitivity: 52,
   roleTemplate: "AI Engineer",
   talentProfile: "핵심인재(기준A)",
-  model: "STEPI-LLM (mock)",
+  model: "SmartHire Eval LLM (mock)",
 };
 
 function SliderRow({
@@ -272,9 +272,9 @@ export default function SettingsPage() {
                   value={s.model}
                   onChange={(v) => update("model", v)}
                   options={[
-                    { value: "STEPI-LLM (mock)", label: "STEPI-LLM (mock)" },
-                    { value: "STEPI-LLM Pro (mock)", label: "STEPI-LLM Pro (mock)" },
-                    { value: "STEPI-LLM Lite (mock)", label: "STEPI-LLM Lite (mock)" },
+                    { value: "SmartHire Eval LLM (mock)", label: "SmartHire Eval LLM (mock)" },
+                    { value: "SmartHire Eval LLM Pro (mock)", label: "SmartHire Eval LLM Pro (mock)" },
+                    { value: "SmartHire Eval LLM Lite (mock)", label: "SmartHire Eval LLM Lite (mock)" },
                   ]}
                   className="w-full"
                 />

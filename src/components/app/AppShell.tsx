@@ -4,15 +4,14 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { cn } from "@/lib/cn";
-import { ChevronDown } from "lucide-react";
 
 const NAV = [
-  { href: "/dashboard", label: "평가 대시보드" },
+  { href: "/dashboard", label: "대시보드" },
   { href: "/resumes", label: "이력서 관리" },
   { href: "/settings", label: "평가 설정" },
-  { href: "/upload", label: "대상자/업로드" },
-  { href: "/monitoring", label: "서버 모니터링" },
-  { href: "/hr-analytics", label: "HR 효율 분석" },
+  { href: "/upload", label: "지원자 업로드" },
+  { href: "/monitoring", label: "모니터링" },
+  { href: "/hr-analytics", label: "Turing" },
 ];
 
 function isAuthed() {
@@ -35,46 +34,42 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     try {
       return {
         email: localStorage.getItem("stepi_user") ?? "hr@company.com",
-        role: localStorage.getItem("stepi_role") ?? "HR 담당자",
+        role: localStorage.getItem("stepi_role") ?? "HR Manager",
       };
     } catch {
-      return { email: "hr@company.com", role: "HR 담당자" };
+      return { email: "hr@company.com", role: "HR Manager" };
     }
   }, []);
 
   return (
-    <div className="min-h-screen app-grid-bg">
-      <div className="mx-auto max-w-[1440px] px-6 py-5">
-        <header className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="h-9 w-9 rounded-xl border border-[var(--border)] bg-[var(--accent-sky-bg)] grid place-items-center text-[var(--chart-1)] font-semibold">
-                S
+    <div className="min-h-screen bg-white">
+      <div className="mx-auto max-w-[1500px] px-6 py-5">
+        <header className="flex flex-col gap-4 rounded-[20px] border border-[rgba(17,24,39,0.08)] bg-white px-5 py-4 shadow-[0_8px_30px_rgba(17,24,39,0.04)] lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-10">
+            <div>
+              <div className="text-[22px] font-semibold tracking-[-0.03em] text-[#111827]">
+                SmartHire Eval
               </div>
-              <div className="leading-tight">
-                <div className="text-sm font-semibold tracking-tight">
-                  STEPI
-                </div>
-                <div className="text-[11px] text-[var(--muted)] -mt-0.5">
-                  AI 지원자 평가 시스템
-                </div>
+              <div className="mt-1 text-[12px] text-[#8b93a1]">
+                AI candidate evaluation dashboard
               </div>
             </div>
 
-            <nav className="hidden md:flex items-center gap-1 rounded-[999px] border border-[var(--border)] bg-[rgba(255,255,255,0.7)] px-1 py-1 backdrop-blur">
+            <nav className="flex flex-wrap items-center gap-2">
               {NAV.map((item) => {
                 const active =
                   pathname === item.href ||
                   (item.href !== "/dashboard" && pathname?.startsWith(item.href));
+
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "px-3.5 py-1.5 text-xs rounded-[999px] transition",
+                      "rounded-full px-3.5 py-2 text-[13px] font-medium transition",
                       active
-                        ? "bg-white shadow-sm border border-[var(--border)] text-[#111827]"
-                        : "text-[var(--muted)] hover:text-[#111827] hover:bg-white/60"
+                        ? "bg-[#111827] text-white"
+                        : "text-[#6b7280] hover:bg-[#f5f7fb] hover:text-[#111827]"
                     )}
                   >
                     {item.label}
@@ -84,16 +79,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </nav>
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="hidden lg:flex items-center gap-2 rounded-[999px] border border-[var(--border)] bg-white/70 px-3 py-1.5 backdrop-blur">
-              <div className="h-7 w-7 rounded-full border border-[var(--border)] bg-[rgba(17,24,39,0.03)]" />
-              <div className="leading-tight">
-                <div className="text-[12px] font-medium">{user.role}</div>
-                <div className="text-[11px] text-[var(--muted)] -mt-0.5">
-                  {user.email}
-                </div>
-              </div>
-              <ChevronDown className="h-4 w-4 text-[var(--muted)]" />
+          <div className="flex items-center justify-between gap-3 lg:justify-end">
+            <div className="text-right">
+              <div className="text-[12px] font-medium text-[#111827]">{user.role}</div>
+              <div className="mt-0.5 text-[12px] text-[#8b93a1]">{user.email}</div>
             </div>
             <button
               onClick={() => {
@@ -104,7 +93,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 }
                 router.replace("/login");
               }}
-              className="rounded-[999px] border border-[var(--border)] bg-white px-3.5 py-2 text-xs text-[var(--muted)] hover:text-[#111827] hover:bg-white/70 transition"
+              className="rounded-full border border-[rgba(17,24,39,0.08)] bg-white px-4 py-2 text-[13px] font-medium text-[#6b7280] transition hover:bg-[#f5f7fb] hover:text-[#111827]"
             >
               로그아웃
             </button>
@@ -116,4 +105,3 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-

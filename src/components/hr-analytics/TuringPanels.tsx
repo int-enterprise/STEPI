@@ -293,8 +293,8 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
               </thead>
               <tbody>
                 {tierBreakdown.map((tier) => (
-                  <tr key={tier.name} className="border-b border-[rgba(17,24,39,0.06)]">
-                    <td className="px-3 py-3 font-medium text-[#111827]">{tier.name}</td>
+                  <tr key={tier.name} className="border-b border-[rgba(10,36,101,0.06)]">
+                    <td className="px-3 py-3 font-medium text-[#000000]">{tier.name}</td>
                     <td className={`px-3 py-3 text-center font-semibold ${scoreClass(tier.score)}`}>
                       {tier.score.toFixed(1)}
                     </td>
@@ -328,7 +328,7 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
               {data.strengths.map((strength) => (
                 <li key={strength} className="flex items-start gap-3">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#0A2465]" />
-                  <span className="text-sm leading-6 text-[#111827]">{strength}</span>
+                  <span className="text-sm leading-6 text-[#000000]">{strength}</span>
                 </li>
               ))}
             </ul>
@@ -354,7 +354,7 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
               {data.weaknesses.map((weakness) => (
                 <li key={weakness} className="flex items-start gap-3">
                   <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#40E0D0]" />
-                  <span className="text-sm leading-6 text-[#111827]">{weakness}</span>
+                  <span className="text-sm leading-6 text-[#000000]">{weakness}</span>
                 </li>
               ))}
             </ul>
@@ -485,7 +485,7 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
                 <div className="rounded-[12px] bg-[var(--accent-sky-bg)] p-2">
                   <Icon className="h-4 w-4 text-[#0A2465]" />
                 </div>
-                <div className="w-28 text-sm font-medium text-[#111827]">
+                <div className="w-28 text-sm font-medium text-[#000000]">
                   {dimension.label}
                 </div>
                 <Progress value={value} barClassName={scoreBar(value)} className="flex-1" />
@@ -533,9 +533,9 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
                 {data.scenario_results.map((scenario) => (
                   <tr
                     key={scenario.name}
-                    className="border-b border-[rgba(17,24,39,0.06)] align-top"
+                    className="border-b border-[rgba(10,36,101,0.06)] align-top"
                   >
-                    <td className="px-3 py-3 font-medium text-[#111827]">{scenario.name}</td>
+                    <td className="px-3 py-3 font-medium text-[#000000]">{scenario.name}</td>
                     <td className="px-3 py-3">
                       <Badge variant="sky">{titleize(scenario.type)}</Badge>
                     </td>
@@ -581,7 +581,7 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
             {faultEntries.map((fault) => (
               <div
                 key={fault.name}
-                className="rounded-[16px] border border-[var(--border)] bg-[rgba(17,24,39,0.02)] p-4"
+                className="rounded-[16px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4"
               >
                 <p className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
                   {fault.name}
@@ -784,7 +784,7 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
               {Object.entries(turing50.benefit_breakdown).map(([key, value]) => (
                 <div
                   key={key}
-                  className="rounded-[16px] border border-[var(--border)] bg-[rgba(17,24,39,0.02)] p-4"
+                  className="rounded-[16px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4"
                 >
                   <p className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
                     {titleize(key)}
@@ -859,8 +859,8 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
               </thead>
               <tbody>
                 {Object.entries(turing50.risk_breakdown).map(([key, value]) => (
-                  <tr key={key} className="border-b border-[rgba(17,24,39,0.06)]">
-                    <td className="px-3 py-3 font-medium text-[#111827]">{titleize(key)}</td>
+                  <tr key={key} className="border-b border-[rgba(10,36,101,0.06)]">
+                    <td className="px-3 py-3 font-medium text-[#000000]">{titleize(key)}</td>
                     <td className={`px-3 py-3 text-center font-semibold ${scoreClass(100 - value)}`}>
                       {value.toFixed(1)}
                     </td>
@@ -888,15 +888,15 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
           {roadmapPhases.map((phase) => (
             <div
               key={phase.label}
-              className="rounded-[18px] border border-[var(--border)] bg-[rgba(17,24,39,0.02)] p-4"
+              className="rounded-[18px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4"
             >
               <div className="flex items-center justify-between gap-3">
-                <p className="text-sm font-semibold text-[#111827]">{phase.label}</p>
+                <p className="text-sm font-semibold text-[#000000]">{phase.label}</p>
                 <Badge variant={phase.badge}>{phase.label}</Badge>
               </div>
               <ul className="mt-4 space-y-3">
                 {phase.items.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm leading-6 text-[#111827]">
+                  <li key={item} className="flex items-start gap-2 text-sm leading-6 text-[#000000]">
                     <ArrowRight className="mt-1 h-3.5 w-3.5 shrink-0 text-[var(--muted)]" />
                     <span>{item}</span>
                   </li>
@@ -930,9 +930,9 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
               </thead>
               <tbody>
                 {scorecard.map((row) => (
-                  <tr key={row.metric} className="border-b border-[rgba(17,24,39,0.06)]">
-                    <td className="px-3 py-3 font-medium text-[#111827]">{row.metric}</td>
-                    <td className="px-3 py-3 text-center font-semibold text-[#111827]">
+                  <tr key={row.metric} className="border-b border-[rgba(10,36,101,0.06)]">
+                    <td className="px-3 py-3 font-medium text-[#000000]">{row.metric}</td>
+                    <td className="px-3 py-3 text-center font-semibold text-[#000000]">
                       {row.value}
                     </td>
                     <td className="px-3 py-3 text-center">

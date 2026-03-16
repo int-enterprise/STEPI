@@ -20,14 +20,14 @@ export function Progress({
   return (
     <div
       className={cn(
-        "h-2 w-full overflow-hidden rounded-full bg-[rgba(17,24,39,0.08)]",
+        "h-2 w-full overflow-hidden rounded-full bg-[rgba(10,36,101,0.10)]",
         className
       )}
     >
       <div
         className={cn(
           "h-full rounded-full transition-all duration-500 ease-out",
-          barClassName || "bg-[#4f8bd6]"
+          barClassName || "bg-[#0A2465]"
         )}
         style={{ width: `${percentage}%` }}
       />

@@ -31,9 +31,9 @@ function CustomTooltip({
   }
 
   return (
-    <div className="rounded-[14px] border border-[var(--border)] bg-white px-3 py-2 shadow-[0_12px_26px_rgba(17,24,39,0.12)]">
+    <div className="rounded-[14px] border border-[var(--border)] bg-white px-3 py-2 shadow-[0_12px_26px_rgba(10,36,101,0.12)]">
       <p className="text-xs text-[var(--muted)]">{label}</p>
-      <p className="text-sm font-semibold text-[#111827]">
+      <p className="text-sm font-semibold text-[#000000]">
         {payload[0].value.toFixed(1)}
       </p>
     </div>
@@ -51,17 +51,17 @@ export function BarChart({ data, dataKey = "value" }: BarChartProps) {
           >
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke="rgba(17,24,39,0.08)"
+              stroke="rgba(10,36,101,0.08)"
               vertical={false}
             />
             <XAxis
               dataKey="name"
-              tick={{ fill: "rgba(17,24,39,0.72)", fontSize: 11 }}
+              tick={{ fill: "rgba(10,36,101,0.72)", fontSize: 11 }}
               axisLine={false}
               tickLine={false}
             />
             <YAxis
-              tick={{ fill: "rgba(17,24,39,0.45)", fontSize: 11 }}
+              tick={{ fill: "rgba(10,36,101,0.45)", fontSize: 11 }}
               axisLine={false}
               tickLine={false}
             />
@@ -70,7 +70,7 @@ export function BarChart({ data, dataKey = "value" }: BarChartProps) {
               {data.map((entry, index) => (
                 <Cell
                   key={`${entry.name}-${index}`}
-                  fill={entry.color || "#4f8bd6"}
+                  fill={entry.color || "#0A2465"}
                 />
               ))}
             </Bar>

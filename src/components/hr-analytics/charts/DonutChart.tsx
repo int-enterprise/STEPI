@@ -24,8 +24,8 @@ function CustomTooltip({
   }
 
   return (
-    <div className="rounded-[14px] border border-[var(--border)] bg-white px-3 py-2 shadow-[0_12px_26px_rgba(17,24,39,0.12)]">
-      <p className="text-sm font-semibold text-[#111827]">{payload[0].name}</p>
+    <div className="rounded-[14px] border border-[var(--border)] bg-white px-3 py-2 shadow-[0_12px_26px_rgba(10,36,101,0.12)]">
+      <p className="text-sm font-semibold text-[#000000]">{payload[0].name}</p>
       <p className="text-xs text-[var(--muted)]">
         {payload[0].value.toFixed(1)} {tooltipLabel || "score"}
       </p>
@@ -66,7 +66,7 @@ export function DonutChart({
       </ClientOnly>
       {centerLabel ? (
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-3xl font-semibold tracking-[-0.04em] text-[#111827]">
+          <span className="text-3xl font-semibold tracking-[-0.04em] text-[#000000]">
             {centerValue}
           </span>
           <span className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">

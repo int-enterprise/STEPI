@@ -7,10 +7,10 @@ interface ScoreGaugeProps {
 }
 
 function getGaugeColor(score: number) {
-  if (score >= 85) return "#4f8bd6";
-  if (score >= 75) return "#e56a8a";
-  if (score >= 60) return "#f1b04a";
-  return "#e56a8a";
+  if (score >= 85) return "#0A2465";
+  if (score >= 75) return "#5B6B95";
+  if (score >= 60) return "#7B8DB8";
+  return "#40E0D0";
 }
 
 export function ScoreGauge({
@@ -34,7 +34,7 @@ export function ScoreGauge({
           cy={center}
           r={radius}
           fill="none"
-          stroke="rgba(17,24,39,0.08)"
+          stroke="rgba(10,36,101,0.08)"
           strokeWidth="10"
         />
         <circle
@@ -51,7 +51,7 @@ export function ScoreGauge({
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-4xl font-semibold tracking-[-0.04em] text-[#111827]">
+        <span className="text-4xl font-semibold tracking-[-0.04em] text-[#000000]">
           {score.toFixed(1)}
         </span>
         <span className="mt-1 text-xs uppercase tracking-[0.16em] text-[var(--muted)]">

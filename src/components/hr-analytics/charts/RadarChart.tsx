@@ -25,20 +25,20 @@ export function RadarChart({ data }: RadarChartProps) {
           <RechartsRadarChart data={data}>
             <defs>
               <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#4f8bd6" stopOpacity="0.95" />
-                <stop offset="52%" stopColor="#e56a8a" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#f1b04a" stopOpacity="0.75" />
+                <stop offset="0%" stopColor="#0A2465" stopOpacity="0.92" />
+                <stop offset="55%" stopColor="#5B6B95" stopOpacity="0.82" />
+                <stop offset="100%" stopColor="#40E0D0" stopOpacity="0.78" />
               </linearGradient>
             </defs>
-            <PolarGrid stroke="rgba(17,24,39,0.12)" />
+            <PolarGrid stroke="rgba(10,36,101,0.12)" />
             <PolarAngleAxis
               dataKey="subject"
-              tick={{ fill: "rgba(17,24,39,0.72)", fontSize: 11 }}
+              tick={{ fill: "rgba(10,36,101,0.78)", fontSize: 11 }}
             />
             <PolarRadiusAxis
               angle={90}
               domain={[0, 100]}
-              tick={{ fill: "rgba(17,24,39,0.45)", fontSize: 10 }}
+              tick={{ fill: "rgba(10,36,101,0.45)", fontSize: 10 }}
             />
             <Radar
               name="Score"

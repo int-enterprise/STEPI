@@ -20,7 +20,7 @@ export function Tabs({ tabs, value, onChange, className }: TabsProps) {
   return (
     <div
       className={cn(
-        "grid gap-3 rounded-[20px] border border-[var(--border)] bg-white p-2 shadow-[0_16px_40px_rgba(17,24,39,0.05)]",
+        "grid gap-3 rounded-[20px] border border-[var(--border)] bg-white p-2 shadow-[0_16px_40px_rgba(10,36,101,0.05)]",
         "md:grid-cols-3",
         className
       )}
@@ -36,8 +36,8 @@ export function Tabs({ tabs, value, onChange, className }: TabsProps) {
             className={cn(
               "rounded-[16px] border px-4 py-4 text-left transition",
               active
-                ? "border-[rgba(79,139,214,0.22)] bg-[var(--accent-sky-bg)] text-[#111827] shadow-[0_12px_26px_rgba(17,24,39,0.08)]"
-                : "border-transparent bg-[rgba(17,24,39,0.03)] text-[#111827] hover:border-[var(--border)] hover:bg-[rgba(79,139,214,0.05)]"
+                ? "border-[rgba(10,36,101,0.22)] bg-[#FCF5EA] text-[#000000] shadow-[0_12px_26px_rgba(10,36,101,0.08)]"
+                : "border-transparent bg-[rgba(10,36,101,0.03)] text-[#000000] hover:border-[var(--border)] hover:bg-[rgba(10,36,101,0.05)]"
             )}
           >
             <div className="flex items-center gap-2 text-sm font-semibold">
@@ -48,7 +48,7 @@ export function Tabs({ tabs, value, onChange, className }: TabsProps) {
               <p
                 className={cn(
                   "mt-1 text-xs leading-5",
-                  active ? "text-[#5f6775]" : "text-[var(--muted)]"
+                  active ? "text-[#5B6B95]" : "text-[var(--muted)]"
                 )}
               >
                 {tab.description}

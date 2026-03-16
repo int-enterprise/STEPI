@@ -431,21 +431,21 @@ const PROFILE_PRESETS: DashboardProfile[] = [
 
 function panelClassName(extra?: string) {
   return [
-    "rounded-[16px] border border-[rgba(17,24,39,0.08)] bg-white",
-    "shadow-[0_4px_20px_rgba(17,24,39,0.04)]",
+    "rounded-[16px] border border-[rgba(10,36,101,0.08)] bg-white",
+    "shadow-[0_4px_20px_rgba(10,36,101,0.04)]",
     extra ?? "",
   ].join(" ");
 }
 
 function gradeTone(grade: string) {
-  if (grade === "S") return "text-[#e46e85]";
-  if (grade === "A") return "text-[#ff9e55]";
-  return "text-[#4f8bd6]";
+  if (grade === "S") return "text-[#0A2465]";
+  if (grade === "A") return "text-[#5B6B95]";
+  return "text-[#7B8DB8]";
 }
 
 function DetailButton() {
   return (
-    <button className="rounded-[10px] border border-[rgba(17,24,39,0.08)] bg-white px-2.5 py-1 text-[11px] font-medium text-[#6b7280] transition hover:bg-[#f6f7fb] hover:text-[#111827]">
+    <button className="rounded-[10px] border border-[rgba(10,36,101,0.08)] bg-white px-2.5 py-1 text-[11px] font-medium text-[#5B6B95] transition hover:bg-[#FAFAFA] hover:text-[#000000]">
       상세
     </button>
   );
@@ -457,7 +457,7 @@ function GradeCurveChart({ grade }: { grade: string }) {
   return (
     <svg viewBox="0 0 220 120" className="h-[128px] w-full">
       <line x1="18" y1="95" x2="208" y2="95" stroke="#e5e7eb" strokeWidth="1.5" />
-      <line x1="18" y1="18" x2="18" y2="95" stroke="#f0f1f4" strokeWidth="1" />
+      <line x1="18" y1="18" x2="18" y2="95" stroke="#E4E7EF" strokeWidth="1" />
 
       {["D", "C", "B", "A", "S"].map((label, index) => (
         <text
@@ -465,7 +465,7 @@ function GradeCurveChart({ grade }: { grade: string }) {
           x={32 + index * 40}
           y={16}
           textAnchor="middle"
-          className="fill-[#b1b7c3] text-[10px] font-medium"
+          className="fill-[#7B8DB8] text-[10px] font-medium"
         >
           {label}
         </text>
@@ -474,17 +474,17 @@ function GradeCurveChart({ grade }: { grade: string }) {
       <path
         d="M18 95 C42 95, 54 95, 78 95 C92 95, 104 58, 114 58 C124 58, 136 95, 150 95 C165 95, 176 95, 188 95"
         fill="none"
-        stroke="#f2869f"
+        stroke="#7B8DB8"
         strokeWidth="3"
       />
       <path
         d="M112 95 C126 95, 138 95, 160 95 C172 95, 184 28, 194 28 C204 28, 208 95, 208 95"
         fill="none"
-        stroke="#55b7f3"
+        stroke="#5B6B95"
         strokeWidth="3"
       />
-      <line x1={markerX} y1="20" x2={markerX} y2="95" stroke="#b9e3ff" strokeDasharray="4 4" />
-      <circle cx={markerX} cy={grade === "S" ? 28 : 58} r="5" fill="#55b7f3" />
+      <line x1={markerX} y1="20" x2={markerX} y2="95" stroke="#C8F5EE" strokeDasharray="4 4" />
+      <circle cx={markerX} cy={grade === "S" ? 28 : 58} r="5" fill="#40E0D0" />
     </svg>
   );
 }
@@ -504,7 +504,7 @@ function VerticalFitChart({
         {[25, 50, 75, 100].map((tick) => (
           <div
             key={tick}
-            className="absolute left-0 right-0 border-t border-dashed border-[rgba(17,24,39,0.06)]"
+            className="absolute left-0 right-0 border-t border-dashed border-[rgba(10,36,101,0.06)]"
             style={{ bottom: `${tick - 8}%` }}
           />
         ))}
@@ -513,7 +513,7 @@ function VerticalFitChart({
       <div className="absolute inset-0 flex items-end justify-between gap-2">
         {items.map((item) => (
           <div key={item.label} className="flex min-w-0 flex-1 flex-col items-center justify-end">
-            <div className="mb-2 text-[16px] font-semibold tracking-[-0.03em] text-[#6b7280]">
+            <div className="mb-2 text-[16px] font-semibold tracking-[-0.03em] text-[#5B6B95]">
               {item.value}%
             </div>
             <div className="flex h-[108px] w-full items-end justify-center">
@@ -522,12 +522,12 @@ function VerticalFitChart({
                 style={{
                   height: `${item.value}%`,
                   background: item.accent
-                    ? "linear-gradient(180deg, #ffb185 0%, #ff7f93 100%)"
-                    : "#d7dbe3",
+                    ? "#40E0D0"
+                    : "#C6CEDF",
                 }}
               />
             </div>
-            <div className="mt-3 h-8 text-center text-[11px] font-medium leading-[1.15] whitespace-pre-line text-[#6b7280]">
+            <div className="mt-3 h-8 text-center text-[11px] font-medium leading-[1.15] whitespace-pre-line text-[#5B6B95]">
               {formatLabel(item.label)}
             </div>
           </div>
@@ -577,7 +577,7 @@ function RadarPanel({
   return (
     <div className={panelClassName("p-4")}>
       <div className="mb-3 flex items-start justify-between gap-3">
-        <div className="text-[16px] font-semibold tracking-[-0.03em] text-[#111827]">
+        <div className="text-[16px] font-semibold tracking-[-0.03em] text-[#000000]">
           {title}
         </div>
         <DetailButton />
@@ -600,7 +600,7 @@ function RadarPanel({
                 key={scale}
                 points={points}
                 fill="none"
-                stroke="#eceff4"
+                stroke="#E4E7EF"
                 strokeWidth="1"
               />
             );
@@ -622,7 +622,7 @@ function RadarPanel({
                   x={labelX}
                   y={labelY - 6}
                   textAnchor={anchor}
-                  className="fill-[#8b93a1] text-[9px] font-medium"
+                  className="fill-[#7B8DB8] text-[9px] font-medium"
                 >
                   {item.label}
                 </text>
@@ -630,7 +630,7 @@ function RadarPanel({
                   x={labelX}
                   y={labelY + 8}
                   textAnchor={anchor}
-                  className="fill-[#111827] text-[10px] font-semibold"
+                  className="fill-[#000000] text-[10px] font-semibold"
                 >
                   {item.applicant.toFixed(1)}/10
                 </text>
@@ -640,23 +640,23 @@ function RadarPanel({
 
           <polygon
             points={polygonPoints(items.map((item) => item.benchmark))}
-            fill="rgba(180, 186, 196, 0.16)"
-            stroke="#b7bec8"
+            fill="rgba(123, 141, 184, 0.16)"
+            stroke="#7B8DB8"
             strokeWidth="2"
             strokeDasharray="4 4"
           />
           <polygon
             points={polygonPoints(items.map((item) => item.applicant))}
-            fill={applicantColor === "#ff8da1" ? "rgba(255, 141, 161, 0.42)" : "rgba(255, 176, 133, 0.34)"}
+            fill={applicantColor === "#40E0D0" ? "rgba(64, 224, 208, 0.24)" : "rgba(91, 107, 149, 0.22)"}
             stroke={applicantColor}
             strokeWidth="2.4"
           />
         </svg>
       </div>
 
-      <div className="mt-3 flex items-center justify-center gap-4 text-[11px] text-[#6b7280]">
+      <div className="mt-3 flex items-center justify-center gap-4 text-[11px] text-[#5B6B95]">
         <div className="flex items-center gap-1.5">
-          <span className="h-2 w-2 rounded-full bg-[#b7bec8]" />
+          <span className="h-2 w-2 rounded-full bg-[#7B8DB8]" />
           {benchmarkLabel}
         </div>
         <div className="flex items-center gap-1.5">
@@ -678,32 +678,32 @@ function TimelinePanel({
   return (
     <div className={panelClassName("p-5")}>
       <div className="mb-4 flex items-start justify-between gap-3">
-        <div className="text-[16px] font-semibold tracking-[-0.03em] text-[#111827]">
+        <div className="text-[16px] font-semibold tracking-[-0.03em] text-[#000000]">
           지원자 이력 타임라인
         </div>
         <DetailButton />
       </div>
 
-      <div className="relative rounded-[12px] bg-[#fbfbfc] px-4 pb-5 pt-4">
-        <div className="grid grid-cols-9 text-center text-[10px] font-medium text-[#b0b7c3]">
+      <div className="relative rounded-[12px] bg-[#FAFAFA] px-4 pb-5 pt-4">
+        <div className="grid grid-cols-9 text-center text-[10px] font-medium text-[#7B8DB8]">
           {years.map((year) => (
             <div key={year}>{year}</div>
           ))}
         </div>
 
         <div className="relative mt-7 h-[126px]">
-          <div className="absolute left-0 right-0 top-8 border-t border-dashed border-[rgba(17,24,39,0.10)]" />
-          <div className="absolute left-0 right-0 top-[84px] border-t border-dashed border-[rgba(17,24,39,0.10)]" />
+          <div className="absolute left-0 right-0 top-8 border-t border-dashed border-[rgba(10,36,101,0.10)]" />
+          <div className="absolute left-0 right-0 top-[84px] border-t border-dashed border-[rgba(10,36,101,0.10)]" />
 
           {items.map((item, index) => {
             const top = index === 0 ? 2 : index === 1 ? 50 : 56;
             const height = index === 2 ? 40 : 34;
             const toneClass =
               item.tone === "amber"
-                ? "border-[#f4c57c] bg-[#ffd798] text-[#6f4a04]"
+                ? "border-[#7B8DB8] bg-[#FCF5EA] text-[#0A2465]"
                 : item.tone === "sky"
-                  ? "border-[#c4d6ff] bg-[#f5f8ff] text-[#6b7280] border-dashed"
-                  : "border-[#dfe4ed] bg-white text-[#6b7280]";
+                  ? "border-[#7B8DB8] bg-[#FAFAFA] text-[#5B6B95] border-dashed"
+                  : "border-[#E5E7EB] bg-white text-[#5B6B95]";
 
             return (
               <div
@@ -765,7 +765,7 @@ export default function DashboardPage() {
         <div className="flex h-full flex-col gap-4">
           <div className={panelClassName("min-h-[336px] p-5")}>
             <div className="mb-2 flex items-start justify-between gap-3">
-              <div className="text-[16px] font-semibold tracking-[-0.03em] text-[#111827]">
+              <div className="text-[16px] font-semibold tracking-[-0.03em] text-[#000000]">
                 지원자 등급 <span className={gradeTone(selectedProfile.grade)}>{selectedProfile.grade}</span>
               </div>
               <DetailButton />
@@ -775,22 +775,22 @@ export default function DashboardPage() {
               <GradeCurveChart grade={selectedProfile.grade} />
             </div>
 
-            <div className="space-y-3 border-t border-[rgba(17,24,39,0.06)] pt-4">
+            <div className="space-y-3 border-t border-[rgba(10,36,101,0.06)] pt-4">
               <div className="flex items-center justify-between text-[12px]">
-                <span className="text-[#8b93a1]">인적성 등급</span>
-                <span className="rounded-full bg-[#f6f7fb] px-2.5 py-1 font-semibold text-[#111827]">
+                <span className="text-[#7B8DB8]">인적성 등급</span>
+                <span className="rounded-full bg-[#FAFAFA] px-2.5 py-1 font-semibold text-[#000000]">
                   {selectedProfile.stageGrades.aptitude}
                 </span>
               </div>
               <div className="flex items-center justify-between text-[12px]">
-                <span className="text-[#8b93a1]">1차 면접 등급</span>
-                <span className="rounded-full bg-[#f6f7fb] px-2.5 py-1 font-semibold text-[#111827]">
+                <span className="text-[#7B8DB8]">1차 면접 등급</span>
+                <span className="rounded-full bg-[#FAFAFA] px-2.5 py-1 font-semibold text-[#000000]">
                   {selectedProfile.stageGrades.first}
                 </span>
               </div>
               <div className="flex items-center justify-between text-[12px]">
-                <span className="text-[#8b93a1]">2차 면접 등급</span>
-                <span className="rounded-full bg-[#f6f7fb] px-2.5 py-1 font-semibold text-[#111827]">
+                <span className="text-[#7B8DB8]">2차 면접 등급</span>
+                <span className="rounded-full bg-[#FAFAFA] px-2.5 py-1 font-semibold text-[#000000]">
                   {selectedProfile.stageGrades.second}
                 </span>
               </div>
@@ -799,7 +799,7 @@ export default function DashboardPage() {
 
           <div className={panelClassName("min-h-[318px] p-5")}>
             <div className="mb-3 flex items-start justify-between gap-3">
-              <div className="text-[16px] font-semibold tracking-[-0.03em] text-[#111827]">
+              <div className="text-[16px] font-semibold tracking-[-0.03em] text-[#000000]">
                 인적성검사 결과
               </div>
               <DetailButton />
@@ -813,9 +813,9 @@ export default function DashboardPage() {
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-[12px] bg-[#fafbfe] px-3 py-3 text-center"
+                  className="rounded-[12px] bg-[#FAFAFA] px-3 py-3 text-center"
                 >
-                  <div className="text-[12px] font-medium text-[#9aa1ad]">{item.label}</div>
+                  <div className="text-[12px] font-medium text-[#7B8DB8]">{item.label}</div>
                   <div className={`mt-2 text-[34px] font-semibold ${gradeTone(item.value)}`}>
                     {item.value}
                   </div>
@@ -825,11 +825,11 @@ export default function DashboardPage() {
 
             <div className="mt-5 grid grid-cols-2 gap-4">
               <div>
-                <div className="mb-2 text-[13px] font-semibold text-[#111827]">인성강점</div>
+                <div className="mb-2 text-[13px] font-semibold text-[#000000]">인성강점</div>
                 <div className="space-y-2">
                   {selectedProfile.aptitude.strengths.map((item, index) => (
-                    <div key={item} className="flex items-center gap-2 text-[12px] text-[#6b7280]">
-                      <span className="grid h-5 w-5 place-items-center rounded-full bg-[#ffe9ee] text-[11px] font-semibold text-[#ff6b86]">
+                    <div key={item} className="flex items-center gap-2 text-[12px] text-[#5B6B95]">
+                      <span className="grid h-5 w-5 place-items-center rounded-full bg-[#E6FBF8] text-[11px] font-semibold text-[#0A2465]">
                         {index + 1}
                       </span>
                       {item}
@@ -838,11 +838,11 @@ export default function DashboardPage() {
                 </div>
               </div>
               <div>
-                <div className="mb-2 text-[13px] font-semibold text-[#111827]">인성역량</div>
+                <div className="mb-2 text-[13px] font-semibold text-[#000000]">인성역량</div>
                 <div className="space-y-2">
                   {selectedProfile.aptitude.competencies.map((item, index) => (
-                    <div key={item} className="flex items-center gap-2 text-[12px] text-[#6b7280]">
-                      <span className="grid h-5 w-5 place-items-center rounded-full bg-[#eef4ff] text-[11px] font-semibold text-[#4f8bd6]">
+                    <div key={item} className="flex items-center gap-2 text-[12px] text-[#5B6B95]">
+                      <span className="grid h-5 w-5 place-items-center rounded-full bg-[#E6ECF8] text-[11px] font-semibold text-[#5B6B95]">
                         {index + 1}
                       </span>
                       {item}
@@ -855,13 +855,13 @@ export default function DashboardPage() {
 
           <div className={panelClassName("flex flex-1 flex-col p-5")}>
             <div className="mb-3 flex items-start justify-between gap-3">
-              <div className="text-[16px] font-semibold tracking-[-0.03em] text-[#111827]">
+              <div className="text-[16px] font-semibold tracking-[-0.03em] text-[#000000]">
                 직군 적합도
               </div>
               <DetailButton />
             </div>
 
-            <div className="flex-1 overflow-hidden rounded-[14px] bg-[#fbfbfc] px-4 pb-3 pt-4">
+            <div className="flex-1 overflow-hidden rounded-[14px] bg-[#FAFAFA] px-4 pb-3 pt-4">
               <VerticalFitChart items={selectedProfile.fitBars} />
             </div>
           </div>
@@ -869,25 +869,25 @@ export default function DashboardPage() {
 
         <div className="flex h-full flex-col gap-4">
           <div className={panelClassName("flex h-full flex-col p-5")}>
-            <div className="flex flex-col gap-3 border-b border-[rgba(17,24,39,0.06)] pb-4 lg:flex-row lg:items-start lg:justify-between">
+            <div className="flex flex-col gap-3 border-b border-[rgba(10,36,101,0.06)] pb-4 lg:flex-row lg:items-start lg:justify-between">
               <div>
-                <div className="text-[31px] font-semibold tracking-[-0.05em] text-[#111827]">
+                <div className="text-[31px] font-semibold tracking-[-0.05em] text-[#000000]">
                   {displayCandidate.name} 님은 이런 사람 입니다.
                 </div>
-                <div className="mt-1 text-[13px] text-[#8b93a1]">{displayCandidate.role}</div>
+                <div className="mt-1 text-[13px] text-[#7B8DB8]">{displayCandidate.role}</div>
               </div>
-              <div className="flex items-center gap-2 self-start rounded-full bg-[#fff6e8] px-3 py-1.5 text-[13px] font-semibold text-[#7a4a00]">
+              <div className="flex items-center gap-2 self-start rounded-full bg-[#E6FBF8] px-3 py-1.5 text-[13px] font-semibold text-[#0A2465]">
                 AI 사용률 {selectedProfile.aiUsage}%
-                <span className="rounded-full bg-[#ffb65f] px-2 py-0.5 text-[11px] text-white">상</span>
+                <span className="rounded-full bg-[#40E0D0] px-2 py-0.5 text-[11px] text-[#0A2465]">상</span>
               </div>
             </div>
 
-            <div className="mt-4 rounded-[18px] bg-[linear-gradient(135deg,rgba(255,175,129,0.9),rgba(255,147,175,0.7),rgba(163,160,255,0.55))] p-[2px]">
+            <div className="mt-4 rounded-[18px] bg-[#0A2465] p-[2px]">
               <div className="rounded-[17px] bg-white px-4 py-4">
-                <div className="inline-flex rounded-full bg-[#ffe8ee] px-3 py-1 text-[12px] font-semibold text-[#ff6b86]">
+                <div className="inline-flex rounded-full bg-[#E6FBF8] px-3 py-1 text-[12px] font-semibold text-[#0A2465]">
                   AI 요약
                 </div>
-                <div className="mt-3 space-y-3 text-[14px] leading-7 text-[#585f6a]">
+                <div className="mt-3 space-y-3 text-[14px] leading-7 text-[#5B6B95]">
                   {selectedProfile.summaryBullets.map((bullet) => (
                     <p key={bullet}>- {bullet}</p>
                   ))}
@@ -896,14 +896,14 @@ export default function DashboardPage() {
             </div>
 
             <div className="mt-4">
-              <div className="text-[16px] font-semibold tracking-[-0.02em] text-[#111827]">
+              <div className="text-[16px] font-semibold tracking-[-0.02em] text-[#000000]">
                 이력서 주요 내용 요약
               </div>
 
               <div className="mt-3 space-y-4">
                 {selectedProfile.resumeSections.map((section, sectionIndex) => (
                   <div key={section.title}>
-                    <div className="text-[18px] font-semibold tracking-[-0.03em] text-[#111827]">
+                    <div className="text-[18px] font-semibold tracking-[-0.03em] text-[#000000]">
                       {section.title}
                     </div>
                     <div className="mt-2.5 space-y-2.5">
@@ -912,12 +912,12 @@ export default function DashboardPage() {
 
                         return (
                           <div key={item} className="flex items-start gap-3">
-                            <div className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[6px] bg-[#ff8f8f] text-[11px] font-semibold text-white">
+                            <div className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[6px] bg-[#40E0D0] text-[11px] font-semibold text-[#0A2465]">
                               {index + 1}
                             </div>
-                            <p className="text-[14px] leading-7 text-[#505762]">
+                            <p className="text-[14px] leading-7 text-[#5B6B95]">
                               {highlight ? (
-                                <span className="mr-1.5 inline rounded-[4px] bg-[linear-gradient(180deg,transparent_18%,rgba(255,235,120,0.95)_18%,rgba(255,235,120,0.95)_86%,transparent_86%)] px-1 font-semibold text-[#6f5a00]">
+                                <span className="mr-1.5 inline rounded-[4px] bg-[#E6FBF8] px-1 font-semibold text-[#0A2465]">
                                   {highlight}
                                 </span>
                               ) : null}
@@ -943,20 +943,20 @@ export default function DashboardPage() {
               items={selectedProfile.coreRadar}
               benchmarkLabel="핵심인재"
               valueLabel="지원자"
-              applicantColor="#ff8da1"
+              applicantColor="#40E0D0"
             />
             <RadarPanel
               title="직무 적합도"
               items={selectedProfile.jobRadar}
               benchmarkLabel="직무 평균"
               valueLabel="지원자"
-              applicantColor="#ffb085"
+              applicantColor="#5B6B95"
             />
           </div>
 
-          <div className="flex flex-1 rounded-[16px] bg-[linear-gradient(135deg,rgba(255,185,140,0.9),rgba(255,152,173,0.7),rgba(194,174,255,0.55))] p-[2px] shadow-[0_4px_20px_rgba(17,24,39,0.04)]">
+          <div className="flex flex-1 rounded-[16px] bg-[#0A2465] p-[2px] shadow-[0_4px_20px_rgba(10,36,101,0.04)]">
             <div className="h-full w-full rounded-[15px] bg-white p-4">
-              <div className="mb-3 text-[16px] font-semibold tracking-[-0.03em] text-[#111827]">
+              <div className="mb-3 text-[16px] font-semibold tracking-[-0.03em] text-[#000000]">
                 AI 생성 질문
               </div>
               <div className="space-y-2.5">
@@ -968,14 +968,14 @@ export default function DashboardPage() {
                     }))
                 ).map((question, index) => (
                   <div key={`${question.point}-${question.text}`} className="flex items-start gap-3">
-                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-[6px] bg-[#ff8f8f] text-[11px] font-semibold text-white">
+                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-[6px] bg-[#40E0D0] text-[11px] font-semibold text-[#0A2465]">
                       {index + 1}
                     </span>
                     <div className="min-w-0">
-                      <div className="inline rounded-[4px] bg-[linear-gradient(180deg,transparent_18%,rgba(255,235,120,0.95)_18%,rgba(255,235,120,0.95)_86%,transparent_86%)] px-1 text-[11px] font-semibold text-[#6f5a00]">
+                      <div className="inline rounded-[4px] bg-[#E6FBF8] px-1 text-[11px] font-semibold text-[#0A2465]">
                         {question.point}
                       </div>
-                      <p className="mt-1 text-[13px] leading-6 text-[#5b6270]">{question.text}</p>
+                      <p className="mt-1 text-[13px] leading-6 text-[#5B6B95]">{question.text}</p>
                     </div>
                   </div>
                 ))}

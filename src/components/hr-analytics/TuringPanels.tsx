@@ -41,17 +41,17 @@ function titleize(value: string) {
 }
 
 function scoreClass(score: number) {
-  if (score >= 85) return "text-[#4f8bd6]";
-  if (score >= 75) return "text-[#e56a8a]";
-  if (score >= 60) return "text-[#b57a16]";
-  return "text-[#b33c5c]";
+  if (score >= 85) return "text-[#0A2465]";
+  if (score >= 75) return "text-[#5B6B95]";
+  if (score >= 60) return "text-[#7B8DB8]";
+  return "text-[#40E0D0]";
 }
 
 function scoreBar(score: number) {
-  if (score >= 85) return "bg-[#4f8bd6]";
-  if (score >= 75) return "bg-[#e56a8a]";
-  if (score >= 60) return "bg-[#f1b04a]";
-  return "bg-[#e56a8a]";
+  if (score >= 85) return "bg-[#0A2465]";
+  if (score >= 75) return "bg-[#5B6B95]";
+  if (score >= 60) return "bg-[#7B8DB8]";
+  return "bg-[#40E0D0]";
 }
 
 function scoreChip(score: number): "sky" | "amber" | "rose" | "default" {
@@ -68,7 +68,7 @@ function decisionConfig(decision: Turing50Result["go_decision"]) {
       description: "Ready for controlled rollout",
       badge: "sky" as const,
       icon: CheckCircle2,
-      bg: "bg-[linear-gradient(135deg,#f2f8ff_0%,#ffffff_100%)]",
+      bg: "bg-[#FCF5EA]",
     };
   }
 
@@ -78,7 +78,7 @@ function decisionConfig(decision: Turing50Result["go_decision"]) {
       description: "Pilot with governance gates",
       badge: "amber" as const,
       icon: AlertTriangle,
-      bg: "bg-[linear-gradient(135deg,#fff6e8_0%,#ffffff_100%)]",
+      bg: "bg-[#FAFAFA]",
     };
   }
 
@@ -87,7 +87,7 @@ function decisionConfig(decision: Turing50Result["go_decision"]) {
     description: "Further remediation needed",
     badge: "rose" as const,
     icon: XCircle,
-    bg: "bg-[linear-gradient(135deg,#fff3f7_0%,#ffffff_100%)]",
+      bg: "bg-[#FFFFFF]",
   };
 }
 
@@ -120,7 +120,7 @@ function KpiCard({
             <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
               {title}
             </p>
-            <p className="mt-1 text-[28px] font-semibold tracking-[-0.04em] text-[#111827]">
+            <p className="mt-1 text-[28px] font-semibold tracking-[-0.04em] text-[#000000]">
               {value}
             </p>
             <p className="mt-1 text-xs text-[var(--muted)]">{subtitle}</p>
@@ -147,10 +147,10 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
     value: pipeline.score,
     color:
       pipeline.score >= 85
-        ? "#4f8bd6"
+        ? "#0A2465"
         : pipeline.score >= 70
-          ? "#e56a8a"
-          : "#f1b04a",
+          ? "#5B6B95"
+          : "#7B8DB8",
   }));
 
   const heatmapColumns = ["Score", "Weight", "Time"];
@@ -181,7 +181,7 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
   const tierDonutData = tierBreakdown.map((tier) => ({
     name: tier.name,
     value: tier.score,
-    fill: tier.passed ? "#4f8bd6" : "#e56a8a",
+    fill: tier.passed ? "#0A2465" : "#40E0D0",
   }));
 
   return (
@@ -191,26 +191,26 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
           title="종합 점수"
           value={data.turing_score.toFixed(1)}
           subtitle={`등급 ${data.grade}`}
-          icon={<Brain className="h-5 w-5 text-[#4f8bd6]" />}
+          icon={<Brain className="h-5 w-5 text-[#0A2465]" />}
         />
         <KpiCard
           title="최고 벤치마크"
           value={topPipeline.score.toFixed(1)}
           subtitle={topPipeline.benchmark_name}
-          icon={<TrendingUp className="h-5 w-5 text-[#e56a8a]" />}
+          icon={<TrendingUp className="h-5 w-5 text-[#5B6B95]" />}
         />
         <KpiCard
           title="프로파일 평균"
           value={profileAverage.toFixed(1)}
           subtitle="5개 역량 축 평균"
-          icon={<Cpu className="h-5 w-5 text-[#b57a16]" />}
+          icon={<Cpu className="h-5 w-5 text-[#7B8DB8]" />}
           tone="amber"
         />
         <KpiCard
           title="Tier 통과율"
           value={`${tierBreakdown.filter((tier) => tier.passed).length}/${tierBreakdown.length}`}
           subtitle="통과한 평가 단계 수"
-          icon={<ShieldCheck className="h-5 w-5 text-[#b33c5c]" />}
+          icon={<ShieldCheck className="h-5 w-5 text-[#40E0D0]" />}
           tone="rose"
         />
       </div>
@@ -309,7 +309,7 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
                     <td className="px-3 py-3">
                       <Progress
                         value={tier.score}
-                        barClassName={tier.passed ? "bg-[#4f8bd6]" : "bg-[#e56a8a]"}
+                        barClassName={tier.passed ? "bg-[#0A2465]" : "bg-[#40E0D0]"}
                       />
                     </td>
                   </tr>
@@ -327,7 +327,7 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
             <ul className="space-y-3">
               {data.strengths.map((strength) => (
                 <li key={strength} className="flex items-start gap-3">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#4f8bd6]" />
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#0A2465]" />
                   <span className="text-sm leading-6 text-[#111827]">{strength}</span>
                 </li>
               ))}
@@ -353,7 +353,7 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
             <ul className="space-y-3">
               {data.weaknesses.map((weakness) => (
                 <li key={weakness} className="flex items-start gap-3">
-                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#e56a8a]" />
+                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#40E0D0]" />
                   <span className="text-sm leading-6 text-[#111827]">{weakness}</span>
                 </li>
               ))}
@@ -407,14 +407,14 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
   const donutData = dimensions.map((dimension, index) => ({
     name: dimension.label,
     value: data.anthropomorphic[dimension.key],
-    fill: ["#4f8bd6", "#e56a8a", "#f1b04a", "#ffb6c8", "#b9daf8", "#ffd798", "#d8ddf0"][index],
+    fill: ["#0A2465", "#5B6B95", "#7B8DB8", "#40E0D0", "#C6CEDF", "#FCF5EA", "#FAFAFA"][index],
   }));
 
   const scenarioBarData = data.scenario_results.map((scenario) => ({
     name: scenario.name,
     value: scenario.score,
     color:
-      scenario.score >= 80 ? "#4f8bd6" : scenario.score >= 70 ? "#e56a8a" : "#f1b04a",
+      scenario.score >= 80 ? "#0A2465" : scenario.score >= 70 ? "#5B6B95" : "#7B8DB8",
   }));
 
   const collaborationIndex =
@@ -427,26 +427,26 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
           title="업무 시나리오 점수"
           value={data.anthropomorphic.overall_score.toFixed(1)}
           subtitle="업무형 상호작용 종합 결과"
-          icon={<HeartHandshake className="h-5 w-5 text-[#4f8bd6]" />}
+          icon={<HeartHandshake className="h-5 w-5 text-[#0A2465]" />}
         />
         <KpiCard
           title="안전성"
           value={data.anthropomorphic.safety.toFixed(1)}
           subtitle="편향 및 정책 제어 수준"
-          icon={<Shield className="h-5 w-5 text-[#e56a8a]" />}
+          icon={<Shield className="h-5 w-5 text-[#5B6B95]" />}
         />
         <KpiCard
           title="협업 지수"
           value={collaborationIndex.toFixed(1)}
           subtitle="커뮤니케이션 + 협업 평균"
-          icon={<Users className="h-5 w-5 text-[#b57a16]" />}
+          icon={<Users className="h-5 w-5 text-[#7B8DB8]" />}
           tone="amber"
         />
         <KpiCard
           title="시나리오"
           value={`${data.scenario_results.filter((scenario) => scenario.score >= 70).length}/${data.scenario_results.length}`}
           subtitle="기준 점수 이상 시나리오 수"
-          icon={<Activity className="h-5 w-5 text-[#b33c5c]" />}
+          icon={<Activity className="h-5 w-5 text-[#40E0D0]" />}
           tone="rose"
         />
       </div>
@@ -483,7 +483,7 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
             return (
               <div key={dimension.key} className="flex items-center gap-3">
                 <div className="rounded-[12px] bg-[var(--accent-sky-bg)] p-2">
-                  <Icon className="h-4 w-4 text-[#4f8bd6]" />
+                  <Icon className="h-4 w-4 text-[#0A2465]" />
                 </div>
                 <div className="w-28 text-sm font-medium text-[#111827]">
                   {dimension.label}
@@ -549,11 +549,11 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
                     </td>
                     <td className="px-3 py-3 text-center">
                       {scenario.score >= 80 ? (
-                        <CheckCircle2 className="mx-auto h-4 w-4 text-[#4f8bd6]" />
+                        <CheckCircle2 className="mx-auto h-4 w-4 text-[#0A2465]" />
                       ) : scenario.score >= 70 ? (
-                        <AlertTriangle className="mx-auto h-4 w-4 text-[#f1b04a]" />
+                        <AlertTriangle className="mx-auto h-4 w-4 text-[#7B8DB8]" />
                       ) : (
-                        <XCircle className="mx-auto h-4 w-4 text-[#e56a8a]" />
+                        <XCircle className="mx-auto h-4 w-4 text-[#40E0D0]" />
                       )}
                     </td>
                     <td className="px-3 py-3 text-xs leading-5 text-[var(--muted)]">
@@ -635,18 +635,18 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
     name: titleize(key),
     value,
     fill: {
-      technical: "#4f8bd6",
-      operational: "#e56a8a",
-      security: "#b9daf8",
-      regulatory: "#f1b04a",
-      human: "#ffd798",
-    }[key] || "#4f8bd6",
+      technical: "#0A2465",
+      operational: "#5B6B95",
+      security: "#7B8DB8",
+      regulatory: "#40E0D0",
+      human: "#FCF5EA",
+    }[key] || "#0A2465",
   }));
 
   const benefitBarData = Object.entries(turing50.benefit_breakdown).map(([key, value]) => ({
     name: titleize(key),
     value,
-    color: "#4f8bd6",
+    color: "#0A2465",
   }));
 
   const profileData = Object.entries(turing10.ai_profile).map(([key, value]) => ({
@@ -710,11 +710,11 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
                 Turing 5.0 의사결정
               </Badge>
               <div className="mt-4 flex items-center gap-3">
-                <div className="rounded-[16px] bg-white p-3 shadow-[0_10px_22px_rgba(17,24,39,0.08)]">
-                  <DecisionIcon className="h-6 w-6 text-[#111827]" />
+                <div className="rounded-[16px] bg-white p-3 shadow-[0_10px_22px_rgba(10,36,101,0.08)]">
+                  <DecisionIcon className="h-6 w-6 text-[#0A2465]" />
                 </div>
                 <div>
-                  <p className="text-[32px] font-semibold tracking-[-0.04em] text-[#111827]">
+                  <p className="text-[32px] font-semibold tracking-[-0.04em] text-[#000000]">
                     {decision.label}
                   </p>
                   <p className="text-sm text-[var(--muted)]">{decision.description}</p>
@@ -726,7 +726,7 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
               <p className="text-xs uppercase tracking-[0.16em] text-[var(--muted)]">
                 Risk-adjusted ROI
               </p>
-              <p className="mt-2 text-[40px] font-semibold tracking-[-0.05em] text-[#111827]">
+              <p className="mt-2 text-[40px] font-semibold tracking-[-0.05em] text-[#000000]">
                 {turing50.risk_adjusted_roi.toFixed(1)}x
               </p>
               <p className="text-sm text-[var(--muted)]">{overall.hiringImpact}</p>
@@ -736,7 +736,7 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
               <p className="text-xs uppercase tracking-[0.16em] text-[var(--muted)]">
                 Recommendation
               </p>
-              <p className="mt-2 text-sm leading-6 text-[#111827]">
+              <p className="mt-2 text-sm leading-6 text-[#000000]">
                 {turing50.recommendation}
               </p>
             </div>
@@ -749,26 +749,26 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
           title="평균 리스크"
           value={avgRisk.toFixed(1)}
           subtitle="영역별 리스크 평균"
-          icon={<ShieldAlert className="h-5 w-5 text-[#4f8bd6]" />}
+          icon={<ShieldAlert className="h-5 w-5 text-[#0A2465]" />}
         />
         <KpiCard
           title="안전성 수준"
           value={turing30.anthropomorphic.safety.toFixed(1)}
           subtitle="운영 및 공정성 관점"
-          icon={<ShieldCheck className="h-5 w-5 text-[#e56a8a]" />}
+          icon={<ShieldCheck className="h-5 w-5 text-[#5B6B95]" />}
         />
         <KpiCard
           title="배포 상태"
           value={turing50.go_decision === "go" ? "확대 가능" : turing50.go_decision === "conditional" ? "파일럿 권장" : "보류"}
           subtitle={overall.deploymentReadiness}
-          icon={<BriefcaseBusiness className="h-5 w-5 text-[#b57a16]" />}
+          icon={<BriefcaseBusiness className="h-5 w-5 text-[#7B8DB8]" />}
           tone="amber"
         />
         <KpiCard
           title="백분위"
           value={`Top ${100 - overall.percentile}%`}
           subtitle={`${overall.percentile}th percentile 기준`}
-          icon={<TrendingUp className="h-5 w-5 text-[#b33c5c]" />}
+          icon={<TrendingUp className="h-5 w-5 text-[#40E0D0]" />}
           tone="rose"
         />
       </div>
@@ -789,10 +789,10 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
                   <p className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
                     {titleize(key)}
                   </p>
-                  <p className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#111827]">
+                  <p className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#000000]">
                     {value.toFixed(1)}
                   </p>
-                  <Progress value={value} className="mt-3" barClassName="bg-[#4f8bd6]" />
+                  <Progress value={value} className="mt-3" barClassName="bg-[#0A2465]" />
                 </div>
               ))}
             </div>
@@ -940,9 +940,9 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
                     </td>
                     <td className="px-3 py-3 text-center">
                       {row.status ? (
-                        <CheckCircle2 className="mx-auto h-4 w-4 text-[#4f8bd6]" />
+                  <CheckCircle2 className="mx-auto h-4 w-4 text-[#0A2465]" />
                       ) : (
-                        <AlertTriangle className="mx-auto h-4 w-4 text-[#f1b04a]" />
+                        <AlertTriangle className="mx-auto h-4 w-4 text-[#7B8DB8]" />
                       )}
                     </td>
                   </tr>

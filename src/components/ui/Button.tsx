@@ -14,10 +14,10 @@ export function Button({
 }) {
   const v =
     variant === "primary"
-      ? "bg-[#111827] text-white hover:bg-[#0b1220] border-transparent"
+      ? "bg-[#000000] text-white hover:bg-[#0A2465] border-transparent"
       : variant === "outline"
-        ? "bg-white text-[#111827] hover:bg-white/70 border-[var(--border)]"
-        : "bg-transparent text-[var(--muted)] hover:text-[#111827] hover:bg-[rgba(17,24,39,0.03)] border-transparent";
+        ? "bg-white text-[#000000] hover:bg-[#FAFAFA] border-[var(--border)]"
+        : "bg-transparent text-[var(--muted)] hover:text-[#000000] hover:bg-[rgba(10,36,101,0.03)] border-transparent";
 
   const s = size === "xs" ? "px-2.5 py-1 text-[11px]" : "px-3 py-1.5 text-xs";
 

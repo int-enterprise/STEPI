@@ -19,14 +19,14 @@ export function QuestionsCard({ candidate }: { candidate: Candidate }) {
         }
       />
       <CardBody className="pt-0.5">
-        <div className="h-[250px] overflow-auto rounded-[14px] border border-[rgba(229,106,138,0.20)] bg-[var(--accent-rose-bg)] px-3.5 py-3">
+        <div className="h-[250px] overflow-auto rounded-[14px] border border-[rgba(10,36,101,0.14)] bg-[rgba(10,36,101,0.03)] px-3.5 py-3">
           <ol className="space-y-2.5">
             {candidate.generatedQuestions.map((q, idx) => (
               <li key={idx} className="flex gap-2.5">
-                <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-lg border border-[rgba(229,106,138,0.35)] bg-white text-[11px] font-semibold text-[#9a2e47] shrink-0">
+                <span className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-lg border border-[rgba(10,36,101,0.22)] bg-white text-[11px] font-semibold text-[#0A2465] shrink-0">
                   {idx + 1}
                 </span>
-                <div className="text-[12px] leading-[1.6] text-[#374151]">
+                <div className="text-[12px] leading-[1.6] text-[#5B6B95]">
                   {q}
                 </div>
               </li>

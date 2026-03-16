@@ -8,7 +8,7 @@ import { ClientOnly } from "@/components/utils/ClientOnly";
 
 export function ClusterFitCard({ candidate }: { candidate: Candidate }) {
   const data = candidate.clusterFit.map((d) => ({ name: d.label, value: d.value }));
-  const colors = ["#4f8bd6", "#e56a8a", "#f1b04a", "#7aa6a0"];
+  const colors = ["#0A2465", "#5B6B95", "#7B8DB8", "#C6CEDF"];
 
   return (
     <Card>
@@ -22,14 +22,14 @@ export function ClusterFitCard({ candidate }: { candidate: Candidate }) {
           <ClientOnly fallback={<div className="h-full w-full" />}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data} layout="vertical" margin={{ top: 4, right: 6, bottom: 0, left: 10 }}>
-                <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10, fill: "rgba(17,24,39,0.55)" }} axisLine={false} tickLine={false} />
-                <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: "rgba(17,24,39,0.70)" }} width={70} axisLine={false} tickLine={false} />
+                <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10, fill: "rgba(10,36,101,0.55)" }} axisLine={false} tickLine={false} />
+                <YAxis type="category" dataKey="name" tick={{ fontSize: 11, fill: "rgba(10,36,101,0.70)" }} width={70} axisLine={false} tickLine={false} />
                 <Tooltip
                   formatter={(v: unknown) => [`${v}%`, "적합도"]}
                   contentStyle={{
                     borderRadius: 12,
-                    border: "1px solid rgba(17,24,39,0.12)",
-                    boxShadow: "0 12px 30px rgba(17,24,39,0.12)",
+                    border: "1px solid rgba(10,36,101,0.12)",
+                    boxShadow: "0 12px 30px rgba(10,36,101,0.12)",
                   }}
                 />
                 <Bar dataKey="value" radius={[8, 8, 8, 8]} barSize={12}>
@@ -43,9 +43,9 @@ export function ClusterFitCard({ candidate }: { candidate: Candidate }) {
         </div>
         <div className="-mt-2 grid grid-cols-4 gap-2">
           {candidate.clusterFit.map((d) => (
-            <div key={d.label} className="rounded-xl border border-[var(--border)] bg-[rgba(17,24,39,0.02)] px-2 py-2 text-center">
+            <div key={d.label} className="rounded-xl border border-[var(--border)] bg-[rgba(10,36,101,0.02)] px-2 py-2 text-center">
               <div className="text-[10px] text-[var(--muted)]">{d.label}</div>
-              <div className="mt-0.5 text-[13px] font-semibold text-[#111827]">{d.value}%</div>
+              <div className="mt-0.5 text-[13px] font-semibold text-[#000000]">{d.value}%</div>
             </div>
           ))}
         </div>

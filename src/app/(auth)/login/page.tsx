@@ -104,12 +104,12 @@ export default function LoginPage() {
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl items-center justify-center">
         <section className="flex w-full items-center justify-center py-6 sm:py-8">
           <div className="mx-auto w-full max-w-[34rem]">
-            <div className="rounded-[34px] border border-[rgba(17,24,39,0.08)] bg-white px-6 py-8 shadow-[0_24px_60px_rgba(17,24,39,0.08)] sm:px-8 sm:py-10">
+            <div className="rounded-[34px] border border-[rgba(10,36,101,0.08)] bg-white px-6 py-8 shadow-[0_24px_60px_rgba(10,36,101,0.08)] sm:px-8 sm:py-10">
               <div className="text-center">
-                <div className="text-[11px] uppercase tracking-[0.32em] text-[#1f4e86]">
+                <div className="text-[11px] uppercase tracking-[0.32em] text-[#5B6B95]">
                   SmartHire Eval
                 </div>
-                <h2 className="mt-5 text-5xl font-semibold tracking-[-0.08em] text-[#9a2e47] sm:text-6xl">
+                <h2 className="mt-5 text-5xl font-semibold tracking-[-0.08em] text-[#000000] sm:text-6xl">
                   {title}
                 </h2>
                 </div>
@@ -159,11 +159,11 @@ export default function LoginPage() {
                     <div className="relative">
                       <span
                         className={cn(
-                          "pointer-events-none absolute -top-3 block h-6 w-6 rotate-45 border border-b-0 border-r-0 bg-white shadow-[0_2px_12px_rgba(17,24,39,0.04)] transition-all",
+                          "pointer-events-none absolute -top-3 block h-6 w-6 rotate-45 border border-b-0 border-r-0 bg-white shadow-[0_2px_12px_rgba(10,36,101,0.04)] transition-all",
                           mode === "signin" ? "left-8" : "left-[8.25rem]"
                         )}
                       />
-                      <div className="rounded-[28px] border border-[rgba(79,139,214,0.16)] bg-white px-5 py-1 shadow-[0_16px_36px_rgba(79,139,214,0.08)]">
+                      <div className="rounded-[28px] border border-[rgba(10,36,101,0.16)] bg-white px-5 py-1 shadow-[0_16px_36px_rgba(10,36,101,0.08)]">
                         <input
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
@@ -176,7 +176,7 @@ export default function LoginPage() {
                       </div>
                     </div>
 
-                    <div className="rounded-[28px] border border-[rgba(229,106,138,0.16)] bg-white px-5 py-1 shadow-[0_16px_36px_rgba(229,106,138,0.08)]">
+                    <div className="rounded-[28px] border border-[rgba(91,107,149,0.16)] bg-white px-5 py-1 shadow-[0_16px_36px_rgba(91,107,149,0.08)]">
                       <input
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -188,7 +188,7 @@ export default function LoginPage() {
                     </div>
 
                     {mode === "signup" ? (
-                      <div className="rounded-[28px] border border-[rgba(241,176,74,0.18)] bg-white px-5 py-1 shadow-[0_16px_36px_rgba(241,176,74,0.08)]">
+                      <div className="rounded-[28px] border border-[rgba(123,141,184,0.18)] bg-white px-5 py-1 shadow-[0_16px_36px_rgba(123,141,184,0.08)]">
                         <input
                           value={repeatPassword}
                           onChange={(e) => setRepeatPassword(e.target.value)}
@@ -201,13 +201,13 @@ export default function LoginPage() {
                     ) : null}
 
                     {error ? (
-                      <div className="rounded-[22px] border border-[rgba(248,113,113,0.25)] bg-[rgba(254,242,242,0.95)] px-4 py-3 text-sm text-rose-700">
+                      <div className="rounded-[22px] border border-[rgba(91,107,149,0.22)] bg-[rgba(91,107,149,0.06)] px-4 py-3 text-sm text-[#0A2465]">
                         {error}
                       </div>
                     ) : null}
 
                     {notice ? (
-                      <div className="rounded-[22px] border border-[rgba(79,139,214,0.18)] bg-[rgba(242,248,255,0.95)] px-4 py-3 text-sm text-[#1f4e86]">
+                      <div className="rounded-[22px] border border-[rgba(10,36,101,0.18)] bg-[rgba(10,36,101,0.04)] px-4 py-3 text-sm text-[#0A2465]">
                         {notice}
                       </div>
                     ) : null}
@@ -217,8 +217,8 @@ export default function LoginPage() {
                       disabled={loading}
                       className={cn(
                         "w-full rounded-[28px] px-4 py-4 text-sm font-semibold text-white transition",
-                        "bg-[linear-gradient(135deg,#4f8bd6,#7eaee7_55%,#e56a8a_125%)] shadow-[0_18px_30px_rgba(79,139,214,0.24)]",
-                        "hover:translate-y-[-1px] hover:shadow-[0_22px_34px_rgba(79,139,214,0.28)]",
+                        "bg-[#0A2465] shadow-[0_18px_30px_rgba(10,36,101,0.24)]",
+                        "hover:translate-y-[-1px] hover:shadow-[0_22px_34px_rgba(10,36,101,0.28)] hover:bg-[#000000]",
                         "disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60"
                       )}
                     >
@@ -228,22 +228,22 @@ export default function LoginPage() {
                 </form>
 
                 <div className="relative mx-auto mt-8 flex w-[92%] items-center justify-center text-xs font-medium uppercase tracking-[0.28em] text-slate-400">
-                  <span className="absolute left-0 top-1/2 h-px w-[42%] -translate-y-1/2 bg-[rgba(17,24,39,0.12)]" />
-                  <span className="absolute right-0 top-1/2 h-px w-[42%] -translate-y-1/2 bg-[rgba(17,24,39,0.12)]" />
+                  <span className="absolute left-0 top-1/2 h-px w-[42%] -translate-y-1/2 bg-[rgba(10,36,101,0.12)]" />
+                  <span className="absolute right-0 top-1/2 h-px w-[42%] -translate-y-1/2 bg-[rgba(10,36,101,0.12)]" />
                   <span className="bg-transparent px-3">OR</span>
                 </div>
 
                 <div className="mt-6 space-y-4">
                   <button
                     type="button"
-                    className="flex w-full items-center justify-center gap-3 rounded-[28px] bg-[linear-gradient(135deg,#4f8bd6,#7eaee7)] px-4 py-4 text-sm font-semibold text-white shadow-[0_18px_30px_rgba(79,139,214,0.24)] transition hover:translate-y-[-1px]"
+                    className="flex w-full items-center justify-center gap-3 rounded-[28px] bg-[#5B6B95] px-4 py-4 text-sm font-semibold text-white shadow-[0_18px_30px_rgba(91,107,149,0.24)] transition hover:translate-y-[-1px] hover:bg-[#0A2465]"
                   >
                     <Chrome className="h-4 w-4" />
                     Sign in with Google
                   </button>
                   <button
                     type="button"
-                    className="flex w-full items-center justify-center gap-3 rounded-[28px] border border-[var(--border)] bg-white/82 px-4 py-4 text-sm font-semibold text-slate-900 shadow-[0_16px_28px_rgba(17,24,39,0.08)] transition hover:translate-y-[-1px]"
+                    className="flex w-full items-center justify-center gap-3 rounded-[28px] border border-[var(--border)] bg-white/82 px-4 py-4 text-sm font-semibold text-slate-900 shadow-[0_16px_28px_rgba(10,36,101,0.08)] transition hover:translate-y-[-1px]"
                   >
                     <Github className="h-4 w-4" />
                     Sign in with GitHub

@@ -44,13 +44,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-white">
       <div className="mx-auto max-w-[1500px] px-6 py-5">
-        <header className="flex flex-col gap-4 rounded-[20px] border border-[rgba(17,24,39,0.08)] bg-white px-5 py-4 shadow-[0_8px_30px_rgba(17,24,39,0.04)] lg:flex-row lg:items-center lg:justify-between">
+        <header className="flex flex-col gap-4 rounded-[20px] border border-[rgba(10,36,101,0.08)] bg-white px-5 py-4 shadow-[0_8px_30px_rgba(10,36,101,0.04)] lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-10">
             <div>
-              <div className="text-[22px] font-semibold tracking-[-0.03em] text-[#111827]">
+              <div className="text-[22px] font-semibold tracking-[-0.03em] text-[#000000]">
                 SmartHire Eval
               </div>
-              <div className="mt-1 text-[12px] text-[#8b93a1]">
+              <div className="mt-1 text-[12px] text-[#7B8DB8]">
                 AI candidate evaluation dashboard
               </div>
             </div>
@@ -68,8 +68,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     className={cn(
                       "rounded-full px-3.5 py-2 text-[13px] font-medium transition",
                       active
-                        ? "bg-[#111827] text-white"
-                        : "text-[#6b7280] hover:bg-[#f5f7fb] hover:text-[#111827]"
+                        ? "bg-[#000000] text-white"
+                        : "text-[#5B6B95] hover:bg-[#FAFAFA] hover:text-[#000000]"
                     )}
                   >
                     {item.label}
@@ -81,8 +81,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
           <div className="flex items-center justify-between gap-3 lg:justify-end">
             <div className="text-right">
-              <div className="text-[12px] font-medium text-[#111827]">{user.role}</div>
-              <div className="mt-0.5 text-[12px] text-[#8b93a1]">{user.email}</div>
+              <div className="text-[12px] font-medium text-[#000000]">{user.role}</div>
+              <div className="mt-0.5 text-[12px] text-[#7B8DB8]">{user.email}</div>
             </div>
             <button
               onClick={() => {
@@ -93,7 +93,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 }
                 router.replace("/login");
               }}
-              className="rounded-full border border-[rgba(17,24,39,0.08)] bg-white px-4 py-2 text-[13px] font-medium text-[#6b7280] transition hover:bg-[#f5f7fb] hover:text-[#111827]"
+              className="rounded-full border border-[rgba(10,36,101,0.08)] bg-white px-4 py-2 text-[13px] font-medium text-[#5B6B95] transition hover:bg-[#FAFAFA] hover:text-[#000000]"
             >
               로그아웃
             </button>

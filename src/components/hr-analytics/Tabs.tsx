@@ -36,7 +36,7 @@ export function Tabs({ tabs, value, onChange, className }: TabsProps) {
             className={cn(
               "rounded-[16px] border px-4 py-4 text-left transition",
               active
-                ? "border-[rgba(10,36,101,0.22)] bg-[#FCF5EA] text-[#000000] shadow-[0_12px_26px_rgba(10,36,101,0.08)]"
+                ? "border-[rgba(10,36,101,0.26)] bg-[#FFFFFF] text-[#000000] shadow-[0_12px_26px_rgba(10,36,101,0.08)]"
                 : "border-transparent bg-[rgba(10,36,101,0.03)] text-[#000000] hover:border-[var(--border)] hover:bg-[rgba(10,36,101,0.05)]"
             )}
           >

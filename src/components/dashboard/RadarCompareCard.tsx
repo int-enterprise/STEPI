@@ -33,29 +33,29 @@ export function RadarCompareCard({
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={data} outerRadius="70%">
                 <PolarGrid stroke="var(--chart-grid)" />
-                <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10, fill: "rgba(17,24,39,0.70)" }} />
-                <PolarRadiusAxis tick={{ fontSize: 9, fill: "rgba(17,24,39,0.45)" }} domain={[0, 100]} />
+                <PolarAngleAxis dataKey="subject" tick={{ fontSize: 10, fill: "rgba(10,36,101,0.70)" }} />
+                <PolarRadiusAxis tick={{ fontSize: 9, fill: "rgba(10,36,101,0.45)" }} domain={[0, 100]} />
                 <Tooltip
                   formatter={(v: unknown, n: unknown) => [`${v}`, String(n)]}
                   contentStyle={{
                     borderRadius: 12,
-                    border: "1px solid rgba(17,24,39,0.12)",
-                    boxShadow: "0 12px 30px rgba(17,24,39,0.12)",
+                    border: "1px solid rgba(10,36,101,0.12)",
+                    boxShadow: "0 12px 30px rgba(10,36,101,0.12)",
                   }}
                 />
-                <Legend wrapperStyle={{ fontSize: 10, color: "rgba(17,24,39,0.65)" }} />
+                <Legend wrapperStyle={{ fontSize: 10, color: "rgba(10,36,101,0.65)" }} />
                 <Radar
                   name="핵심인재"
                   dataKey="핵심인재"
-                  stroke="rgba(17,24,39,0.35)"
-                  fill="rgba(17,24,39,0.10)"
+                  stroke="rgba(10,36,101,0.35)"
+                  fill="rgba(10,36,101,0.10)"
                   fillOpacity={1}
                 />
                 <Radar
                   name="지원자"
                   dataKey="지원자"
-                  stroke="var(--chart-2)"
-                  fill="rgba(229,106,138,0.22)"
+                  stroke="#0A2465"
+                  fill="rgba(10,36,101,0.16)"
                   fillOpacity={1}
                 />
               </RadarChart>

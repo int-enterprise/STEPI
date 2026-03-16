@@ -4,30 +4,39 @@
 :root {
   --font-pretendard: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-  /* Base */
-  --app-bg: #ffffff;
-  --surface: #ffffff;
-  --text: #111827;
-  --muted: #6b7280;
+  /* Palette */
+  --primary: #000000;
+  --base: #ffffff;
+  --base-soft: #fafafa;
+  --base-warm: #fcf5ea;
+  --secondary-1: #0a2465;
+  --secondary-2: #5b6b95;
+  --secondary-3: #7b8db8;
+  --accent: #40e0d0;
+
+  /* Surfaces / text */
+  --app-bg: var(--base);
+  --surface: var(--base);
+  --surface-soft: var(--base-soft);
+  --text: var(--primary);
+  --muted: var(--secondary-2);
 
   /* Borders / radius */
-  --border: rgba(17, 24, 39, 0.10);
-  --border-strong: rgba(17, 24, 39, 0.14);
+  --border: rgba(10, 36, 101, 0.10);
+  --border-strong: rgba(10, 36, 101, 0.14);
   --radius: 14px;
 
-  /* Pastel accents (sample-like) */
-  --accent-rose: #f6c6d2;
-  --accent-rose-bg: #fff3f7;
-  --accent-amber: #f4d7a1;
-  --accent-amber-bg: #fff6e8;
-  --accent-sky: #b9daf8;
-  --accent-sky-bg: #f2f8ff;
+  /* Accent backgrounds (derived) */
+  --accent-bg: rgba(64, 224, 208, 0.12);
+  --accent-bg-strong: rgba(64, 224, 208, 0.18);
 
-  /* Chart palette */
-  --chart-1: #4f8bd6;
-  --chart-2: #e56a8a;
-  --chart-3: #f1b04a;
-  --chart-grid: rgba(17, 24, 39, 0.08);
+  /* Section tones (keep names, palette-based) */
+  --tone-1-bg: var(--surface-soft);
+  --tone-2-bg: rgba(10, 36, 101, 0.03);
+  --tone-3-bg: rgba(91, 107, 149, 0.06);
+
+  /* Chart grid */
+  --chart-grid: rgba(10, 36, 101, 0.10);
 }
 
 @theme inline {
@@ -43,25 +52,22 @@ body {
   font-family: var(--font-pretendard);
 }
 
-/* Subtle dotted grid 느낌 (샘플과 유사한 밝은 패널 배경) */
+/* 사용자 요청: 그라데이션/패턴 제거 → 단색 배경 */
 .app-grid-bg {
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(17, 24, 39, 0.06) 1px, transparent 0);
-  background-size: 18px 18px;
-  background-position: 0 0;
+  background: var(--surface-soft);
 }
 
 /* Scrollbar: 얇고 정돈된 느낌 */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(17, 24, 39, 0.18) transparent;
+  scrollbar-color: rgba(10, 36, 101, 0.18) transparent;
 }
 *::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 *::-webkit-scrollbar-thumb {
-  background: rgba(17, 24, 39, 0.16);
+  background: rgba(10, 36, 101, 0.16);
   border-radius: 999px;
   border: 3px solid transparent;
   background-clip: content-box;

@@ -38,7 +38,7 @@ export function GradeDistribution({
           <LineChart data={data} margin={{ top: 8, right: 8, bottom: 2, left: 0 }}>
             <XAxis
               dataKey="x"
-              tick={{ fontSize: 10, fill: "rgba(17,24,39,0.55)" }}
+              tick={{ fontSize: 10, fill: "rgba(10,36,101,0.55)" }}
               ticks={[20, 40, 60, 80]}
               axisLine={false}
               tickLine={false}
@@ -49,14 +49,14 @@ export function GradeDistribution({
               labelFormatter={(l) => `점수 ${l}`}
               contentStyle={{
                 borderRadius: 12,
-                border: "1px solid rgba(17,24,39,0.12)",
-                boxShadow: "0 12px 30px rgba(17,24,39,0.12)",
+                border: "1px solid rgba(10,36,101,0.12)",
+                boxShadow: "0 12px 30px rgba(10,36,101,0.12)",
               }}
             />
             <Line
               type="monotone"
               dataKey="y"
-              stroke="var(--chart-1)"
+              stroke="#0A2465"
               strokeWidth={2}
               dot={false}
               activeDot={{ r: 4 }}
@@ -64,7 +64,7 @@ export function GradeDistribution({
             <Line
               type="monotone"
               dataKey="y"
-              stroke="rgba(229,106,138,0.55)"
+              stroke="rgba(91,107,149,0.55)"
               strokeWidth={1}
               dot={false}
               isAnimationActive={false}
@@ -75,7 +75,7 @@ export function GradeDistribution({
                 Math.abs(p.x - highlightX) < Math.abs(best.x - highlightX) ? p : best
               ).y}
               r={5}
-              fill="var(--chart-2)"
+              fill="#5B6B95"
               stroke="white"
               strokeWidth={2}
             />
@@ -84,7 +84,7 @@ export function GradeDistribution({
       </ClientOnly>
       <div className="mt-1 flex items-center justify-between text-[10px] text-[var(--muted)]">
         <span>하위</span>
-        <span className="text-[#111827] font-medium">
+        <span className="text-[#000000] font-medium">
           {grade} · 상위 {percentile.toFixed(1)}%
         </span>
         <span>상위</span>

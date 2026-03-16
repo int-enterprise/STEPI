@@ -44,14 +44,14 @@ function scoreClass(score: number) {
   if (score >= 85) return "text-[#0A2465]";
   if (score >= 75) return "text-[#5B6B95]";
   if (score >= 60) return "text-[#7B8DB8]";
-  return "text-[#40E0D0]";
+  return "text-[#7B8DB8]";
 }
 
 function scoreBar(score: number) {
   if (score >= 85) return "bg-[#0A2465]";
   if (score >= 75) return "bg-[#5B6B95]";
   if (score >= 60) return "bg-[#7B8DB8]";
-  return "bg-[#40E0D0]";
+  return "bg-[#7B8DB8]";
 }
 
 function scoreChip(score: number): "sky" | "amber" | "rose" | "default" {
@@ -68,7 +68,7 @@ function decisionConfig(decision: Turing50Result["go_decision"]) {
       description: "Ready for controlled rollout",
       badge: "sky" as const,
       icon: CheckCircle2,
-      bg: "bg-[#FCF5EA]",
+      bg: "bg-[#FAFAFA]",
     };
   }
 
@@ -106,10 +106,10 @@ function KpiCard({
 }) {
   const toneStyles =
     tone === "amber"
-      ? "bg-[var(--accent-amber-bg)]"
+      ? "bg-[rgba(123,141,184,0.12)]"
       : tone === "rose"
-        ? "bg-[var(--accent-rose-bg)]"
-        : "bg-[var(--accent-sky-bg)]";
+        ? "bg-[rgba(91,107,149,0.10)]"
+        : "bg-[rgba(10,36,101,0.06)]";
 
   return (
     <Card className="border-transparent">
@@ -181,7 +181,7 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
   const tierDonutData = tierBreakdown.map((tier) => ({
     name: tier.name,
     value: tier.score,
-    fill: tier.passed ? "#0A2465" : "#40E0D0",
+    fill: tier.passed ? "#0A2465" : "#7B8DB8",
   }));
 
   return (
@@ -210,7 +210,7 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
           title="Tier 통과율"
           value={`${tierBreakdown.filter((tier) => tier.passed).length}/${tierBreakdown.length}`}
           subtitle="통과한 평가 단계 수"
-          icon={<ShieldCheck className="h-5 w-5 text-[#40E0D0]" />}
+          icon={<ShieldCheck className="h-5 w-5 text-[#7B8DB8]" />}
           tone="rose"
         />
       </div>
@@ -309,7 +309,7 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
                     <td className="px-3 py-3">
                       <Progress
                         value={tier.score}
-                        barClassName={tier.passed ? "bg-[#0A2465]" : "bg-[#40E0D0]"}
+                        barClassName={tier.passed ? "bg-[#0A2465]" : "bg-[#7B8DB8]"}
                       />
                     </td>
                   </tr>
@@ -353,7 +353,7 @@ export function Turing10Panel({ data }: { data: Turing10Result }) {
             <ul className="space-y-3">
               {data.weaknesses.map((weakness) => (
                 <li key={weakness} className="flex items-start gap-3">
-                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#40E0D0]" />
+                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#5B6B95]" />
                   <span className="text-sm leading-6 text-[#000000]">{weakness}</span>
                 </li>
               ))}
@@ -407,7 +407,7 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
   const donutData = dimensions.map((dimension, index) => ({
     name: dimension.label,
     value: data.anthropomorphic[dimension.key],
-    fill: ["#0A2465", "#5B6B95", "#7B8DB8", "#40E0D0", "#C6CEDF", "#FCF5EA", "#FAFAFA"][index],
+    fill: ["#0A2465", "#5B6B95", "#7B8DB8", "#C6CEDF", "#5B6B95", "#FAFAFA", "#7B8DB8"][index],
   }));
 
   const scenarioBarData = data.scenario_results.map((scenario) => ({
@@ -446,7 +446,7 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
           title="시나리오"
           value={`${data.scenario_results.filter((scenario) => scenario.score >= 70).length}/${data.scenario_results.length}`}
           subtitle="기준 점수 이상 시나리오 수"
-          icon={<Activity className="h-5 w-5 text-[#40E0D0]" />}
+          icon={<Activity className="h-5 w-5 text-[#7B8DB8]" />}
           tone="rose"
         />
       </div>
@@ -482,7 +482,7 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
 
             return (
               <div key={dimension.key} className="flex items-center gap-3">
-                <div className="rounded-[12px] bg-[var(--accent-sky-bg)] p-2">
+                <div className="rounded-[12px] bg-[rgba(10,36,101,0.06)] p-2">
                   <Icon className="h-4 w-4 text-[#0A2465]" />
                 </div>
                 <div className="w-28 text-sm font-medium text-[#000000]">
@@ -553,7 +553,7 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
                       ) : scenario.score >= 70 ? (
                         <AlertTriangle className="mx-auto h-4 w-4 text-[#7B8DB8]" />
                       ) : (
-                        <XCircle className="mx-auto h-4 w-4 text-[#40E0D0]" />
+                        <XCircle className="mx-auto h-4 w-4 text-[#5B6B95]" />
                       )}
                     </td>
                     <td className="px-3 py-3 text-xs leading-5 text-[var(--muted)]">
@@ -638,8 +638,8 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
       technical: "#0A2465",
       operational: "#5B6B95",
       security: "#7B8DB8",
-      regulatory: "#40E0D0",
-      human: "#FCF5EA",
+      regulatory: "#5B6B95",
+      human: "#FAFAFA",
     }[key] || "#0A2465",
   }));
 
@@ -768,7 +768,7 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
           title="백분위"
           value={`Top ${100 - overall.percentile}%`}
           subtitle={`${overall.percentile}th percentile 기준`}
-          icon={<TrendingUp className="h-5 w-5 text-[#40E0D0]" />}
+          icon={<TrendingUp className="h-5 w-5 text-[#7B8DB8]" />}
           tone="rose"
         />
       </div>

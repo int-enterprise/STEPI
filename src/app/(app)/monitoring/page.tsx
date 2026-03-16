@@ -63,18 +63,18 @@ export default function MonitoringPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <div className="text-[12px] text-[var(--muted)]">{m.title}</div>
-                  <div className="mt-1 text-2xl font-semibold text-[#111827]">
+                  <div className="mt-1 text-2xl font-semibold text-[#000000]">
                     {m.v.toFixed ? m.v.toFixed(1) : m.v}
-                    <span className="ml-1 text-[12px] text-[rgba(17,24,39,0.60)]">
+                    <span className="ml-1 text-[12px] text-[rgba(10,36,101,0.60)]">
                       {m.unit}
                     </span>
                   </div>
                 </div>
                 <Badge variant={m.s.variant}>{m.s.label}</Badge>
               </div>
-              <div className="mt-3 h-2 w-full rounded-[999px] bg-[rgba(17,24,39,0.06)] overflow-hidden">
+              <div className="mt-3 h-2 w-full rounded-[999px] bg-[rgba(10,36,101,0.06)] overflow-hidden">
                 <div
-                  className="h-full rounded-[999px] bg-[var(--chart-1)]"
+                  className="h-full rounded-[999px] bg-[#0A2465]"
                   style={{ width: `${Math.min(100, Math.max(0, Number(m.v)))}%` }}
                 />
               </div>
@@ -93,13 +93,13 @@ export default function MonitoringPage() {
           <CardBody className="pt-0">
             <div className="grid grid-cols-3 gap-3">
               {[
-                { title: "CPU", data: cpu, color: "var(--chart-1)" },
-                { title: "GPU", data: gpu, color: "var(--chart-2)" },
-                { title: "MEM", data: mem, color: "var(--chart-3)" },
+                { title: "CPU", data: cpu, color: "#0A2465" },
+                { title: "GPU", data: gpu, color: "#5B6B95" },
+                { title: "MEM", data: mem, color: "#7B8DB8" },
               ].map((c) => (
                 <div key={c.title} className="rounded-[14px] border border-[var(--border)] bg-white px-3.5 py-3">
                   <div className="flex items-center justify-between">
-                    <div className="text-[12px] font-semibold text-[#111827]">
+                    <div className="text-[12px] font-semibold text-[#000000]">
                       {c.title}
                     </div>
                     <Badge variant="muted">{c.data[c.data.length - 1]?.v.toFixed(1)}%</Badge>
@@ -109,14 +109,14 @@ export default function MonitoringPage() {
                       <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={c.data} margin={{ top: 6, right: 6, bottom: 0, left: -20 }}>
                           <CartesianGrid stroke="var(--chart-grid)" strokeDasharray="3 3" />
-                          <XAxis dataKey="t" tick={{ fontSize: 10, fill: "rgba(17,24,39,0.55)" }} axisLine={false} tickLine={false} />
-                          <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: "rgba(17,24,39,0.45)" }} axisLine={false} tickLine={false} />
+                          <XAxis dataKey="t" tick={{ fontSize: 10, fill: "rgba(10,36,101,0.55)" }} axisLine={false} tickLine={false} />
+                          <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: "rgba(10,36,101,0.45)" }} axisLine={false} tickLine={false} />
                           <Tooltip
                             formatter={(v: unknown) => [`${v}%`, c.title]}
                             contentStyle={{
                               borderRadius: 12,
-                              border: "1px solid rgba(17,24,39,0.12)",
-                              boxShadow: "0 12px 30px rgba(17,24,39,0.12)",
+                              border: "1px solid rgba(10,36,101,0.12)",
+                              boxShadow: "0 12px 30px rgba(10,36,101,0.12)",
                             }}
                           />
                           <Line type="monotone" dataKey="v" stroke={c.color} strokeWidth={2} dot={false} />
@@ -145,9 +145,9 @@ export default function MonitoringPage() {
                     <div className="text-[12px] text-[var(--muted)]">{m.k}</div>
                     <Badge variant={m.variant}>{m.variant === "muted" ? "정상" : "상태"}</Badge>
                   </div>
-                  <div className="mt-1 text-xl font-semibold text-[#111827]">
+                  <div className="mt-1 text-xl font-semibold text-[#000000]">
                     {m.v}
-                    <span className="ml-1 text-[12px] text-[rgba(17,24,39,0.60)]">{m.unit}</span>
+                    <span className="ml-1 text-[12px] text-[rgba(10,36,101,0.60)]">{m.unit}</span>
                   </div>
                 </div>
               ))}
@@ -155,7 +155,7 @@ export default function MonitoringPage() {
 
             <div className="mt-3 rounded-[14px] border border-[var(--border)] bg-white px-4 py-3">
               <div className="flex items-center justify-between">
-                <div className="text-[12px] font-semibold text-[#111827]">
+                <div className="text-[12px] font-semibold text-[#000000]">
                   API 호출 추세
                 </div>
                 <Badge variant="muted">최근 {api.length}시간</Badge>
@@ -165,17 +165,17 @@ export default function MonitoringPage() {
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={api} margin={{ top: 6, right: 6, bottom: 0, left: -10 }}>
                       <CartesianGrid stroke="var(--chart-grid)" strokeDasharray="3 3" />
-                      <XAxis dataKey="t" tick={{ fontSize: 10, fill: "rgba(17,24,39,0.55)" }} axisLine={false} tickLine={false} />
-                      <YAxis tick={{ fontSize: 10, fill: "rgba(17,24,39,0.45)" }} axisLine={false} tickLine={false} />
+                      <XAxis dataKey="t" tick={{ fontSize: 10, fill: "rgba(10,36,101,0.55)" }} axisLine={false} tickLine={false} />
+                      <YAxis tick={{ fontSize: 10, fill: "rgba(10,36,101,0.45)" }} axisLine={false} tickLine={false} />
                       <Tooltip
                         formatter={(v: unknown) => [`${v}회`, "호출 수"]}
                         contentStyle={{
                           borderRadius: 12,
-                          border: "1px solid rgba(17,24,39,0.12)",
-                          boxShadow: "0 12px 30px rgba(17,24,39,0.12)",
+                          border: "1px solid rgba(10,36,101,0.12)",
+                          boxShadow: "0 12px 30px rgba(10,36,101,0.12)",
                         }}
                       />
-                      <Area type="monotone" dataKey="v" stroke="var(--chart-1)" fill="rgba(79,139,214,0.18)" strokeWidth={2} />
+                      <Area type="monotone" dataKey="v" stroke="#0A2465" fill="rgba(10,36,101,0.14)" strokeWidth={2} />
                     </AreaChart>
                   </ResponsiveContainer>
                 </ClientOnly>

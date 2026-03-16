@@ -27,7 +27,7 @@ export function RadarChart({ data }: RadarChartProps) {
               <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#0A2465" stopOpacity="0.92" />
                 <stop offset="55%" stopColor="#5B6B95" stopOpacity="0.82" />
-                <stop offset="100%" stopColor="#40E0D0" stopOpacity="0.78" />
+                <stop offset="100%" stopColor="#7B8DB8" stopOpacity="0.78" />
               </linearGradient>
             </defs>
             <PolarGrid stroke="rgba(10,36,101,0.12)" />

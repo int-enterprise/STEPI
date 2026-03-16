@@ -88,7 +88,7 @@ export default function HrAnalyticsPage() {
               <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
                 Model
               </p>
-              <p className="mt-1 text-sm font-medium text-[#111827]">
+              <p className="mt-1 text-sm font-medium text-[#000000]">
                 {MOCK_HR_EVALUATION.summary.modelName}
               </p>
               <p className="mt-1 text-xs text-[var(--muted)]">
@@ -99,7 +99,7 @@ export default function HrAnalyticsPage() {
               <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
                 Evaluator
               </p>
-              <p className="mt-1 text-sm font-medium text-[#111827]">
+              <p className="mt-1 text-sm font-medium text-[#000000]">
                 {MOCK_HR_EVALUATION.summary.evaluator}
               </p>
             </div>
@@ -107,7 +107,7 @@ export default function HrAnalyticsPage() {
               <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
                 Status
               </p>
-              <p className="mt-1 text-sm font-medium text-[#111827]">
+              <p className="mt-1 text-sm font-medium text-[#000000]">
                 {MOCK_HR_EVALUATION.summary.status}
               </p>
             </div>
@@ -115,7 +115,7 @@ export default function HrAnalyticsPage() {
               <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--muted)]">
                 Percentile
               </p>
-              <p className="mt-1 text-sm font-medium text-[#111827]">
+              <p className="mt-1 text-sm font-medium text-[#000000]">
                 {MOCK_HR_EVALUATION.overall.percentile}th percentile
               </p>
             </div>
@@ -127,8 +127,8 @@ export default function HrAnalyticsPage() {
           <CardBody className="grid gap-4 pt-0 md:grid-cols-3">
             <div>
               <div className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-[#4f8bd6]" />
-                <p className="text-sm font-semibold text-[#111827]">배포 메모</p>
+                <ShieldCheck className="h-4 w-4 text-[#0A2465]" />
+                <p className="text-sm font-semibold text-[#000000]">배포 메모</p>
               </div>
               <p className="mt-1 text-xs leading-6 text-[var(--muted)]">
                 {MOCK_HR_EVALUATION.overall.hiringImpact}
@@ -136,15 +136,15 @@ export default function HrAnalyticsPage() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-[#e56a8a]" />
-                <p className="text-sm font-semibold text-[#111827]">Target use case</p>
+                <Sparkles className="h-4 w-4 text-[#5B6B95]" />
+                <p className="text-sm font-semibold text-[#000000]">Target use case</p>
               </div>
               <p className="mt-1 text-xs leading-6 text-[var(--muted)]">
                 {MOCK_HR_EVALUATION.summary.useCase}
               </p>
             </div>
             <div>
-              <p className="text-sm font-semibold text-[#111827]">기관</p>
+              <p className="text-sm font-semibold text-[#000000]">기관</p>
               <p className="mt-1 text-xs leading-6 text-[var(--muted)]">
                 {MOCK_HR_EVALUATION.summary.organization}
               </p>

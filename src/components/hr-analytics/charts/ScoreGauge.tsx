@@ -10,7 +10,7 @@ function getGaugeColor(score: number) {
   if (score >= 85) return "#0A2465";
   if (score >= 75) return "#5B6B95";
   if (score >= 60) return "#7B8DB8";
-  return "#40E0D0";
+  return "#7B8DB8";
 }
 
 export function ScoreGauge({

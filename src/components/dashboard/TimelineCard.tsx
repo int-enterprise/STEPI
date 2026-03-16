@@ -23,10 +23,10 @@ function range(items: TimelineItem[]) {
 }
 
 function color(type: TimelineItem["type"]) {
-  if (type === "학력") return "bg-[rgba(79,139,214,0.16)] border-[rgba(79,139,214,0.35)]";
-  if (type === "연구") return "bg-[rgba(229,106,138,0.16)] border-[rgba(229,106,138,0.35)]";
-  if (type === "프로젝트") return "bg-[rgba(241,176,74,0.18)] border-[rgba(241,176,74,0.35)]";
-  return "bg-[rgba(17,24,39,0.05)] border-[var(--border)]";
+  if (type === "학력") return "bg-[rgba(10,36,101,0.06)] border-[rgba(10,36,101,0.20)]";
+  if (type === "연구") return "bg-[rgba(91,107,149,0.08)] border-[rgba(91,107,149,0.22)]";
+  if (type === "프로젝트") return "bg-[rgba(123,141,184,0.10)] border-[rgba(123,141,184,0.24)]";
+  return "bg-[rgba(10,36,101,0.03)] border-[var(--border)]";
 }
 
 export function TimelineCard({ candidate }: { candidate: Candidate }) {
@@ -51,7 +51,7 @@ export function TimelineCard({ candidate }: { candidate: Candidate }) {
 
         <div className="mt-3 rounded-[14px] border border-[var(--border)] bg-white px-3 py-3">
           <div className="relative h-[128px]">
-            <div className="absolute left-0 right-0 top-[18px] h-[1px] bg-[rgba(17,24,39,0.10)]" />
+            <div className="absolute left-0 right-0 top-[18px] h-[1px] bg-[rgba(10,36,101,0.10)]" />
             {items.slice(0, 6).map((it, idx) => {
               const s = toMonthIndex(it.start) ?? min;
               const e = it.end === "현재" ? max : toMonthIndex(it.end) ?? max;
@@ -62,14 +62,14 @@ export function TimelineCard({ candidate }: { candidate: Candidate }) {
                 <div key={`${it.label}-${idx}`} className="absolute left-0 right-0" style={{ top }}>
                   <div
                     className={cn(
-                      "absolute h-6 rounded-[10px] border px-2.5 text-[11px] leading-6 text-[#111827] overflow-hidden whitespace-nowrap text-ellipsis",
+                      "absolute h-6 rounded-[10px] border px-2.5 text-[11px] leading-6 text-[#000000] overflow-hidden whitespace-nowrap text-ellipsis",
                       color(it.type)
                     )}
                     style={{ left: `${left}%`, width: `${Math.max(10, width)}%` }}
                     title={`${it.label} (${it.start} ~ ${it.end})`}
                   >
                     {it.label}
-                    <span className="ml-2 text-[10px] text-[rgba(17,24,39,0.55)]">
+                    <span className="ml-2 text-[10px] text-[rgba(10,36,101,0.55)]">
                       {it.start} ~ {it.end}
                     </span>
                   </div>

@@ -484,7 +484,7 @@ function GradeCurveChart({ grade }: { grade: string }) {
         strokeWidth="3"
       />
       <line x1={markerX} y1="20" x2={markerX} y2="95" stroke="#C8F5EE" strokeDasharray="4 4" />
-      <circle cx={markerX} cy={grade === "S" ? 28 : 58} r="5" fill="#40E0D0" />
+      <circle cx={markerX} cy={grade === "S" ? 28 : 58} r="5" fill="#5B6B95" />
     </svg>
   );
 }
@@ -522,7 +522,7 @@ function VerticalFitChart({
                 style={{
                   height: `${item.value}%`,
                   background: item.accent
-                    ? "#40E0D0"
+                    ? "#5B6B95"
                     : "#C6CEDF",
                 }}
               />
@@ -647,7 +647,7 @@ function RadarPanel({
           />
           <polygon
             points={polygonPoints(items.map((item) => item.applicant))}
-            fill={applicantColor === "#40E0D0" ? "rgba(64, 224, 208, 0.24)" : "rgba(91, 107, 149, 0.22)"}
+            fill={applicantColor === "#0A2465" ? "rgba(10, 36, 101, 0.16)" : "rgba(91, 107, 149, 0.22)"}
             stroke={applicantColor}
             strokeWidth="2.4"
           />
@@ -700,7 +700,7 @@ function TimelinePanel({
             const height = index === 2 ? 40 : 34;
             const toneClass =
               item.tone === "amber"
-                ? "border-[#7B8DB8] bg-[#FCF5EA] text-[#0A2465]"
+                ? "border-[#7B8DB8] bg-[#FAFAFA] text-[#0A2465]"
                 : item.tone === "sky"
                   ? "border-[#7B8DB8] bg-[#FAFAFA] text-[#5B6B95] border-dashed"
                   : "border-[#E5E7EB] bg-white text-[#5B6B95]";
@@ -708,7 +708,7 @@ function TimelinePanel({
             return (
               <div
                 key={`${item.label}-${item.range}`}
-                className={`absolute overflow-hidden rounded-[10px] border px-2.5 py-2 shadow-[0_1px_6px_rgba(17,24,39,0.03)] ${toneClass}`}
+                className={`absolute overflow-hidden rounded-[10px] border px-2.5 py-2 shadow-[0_1px_6px_rgba(10,36,101,0.03)] ${toneClass}`}
                 style={{
                   left: `${item.start}%`,
                   width: `${item.end - item.start}%`,
@@ -722,7 +722,7 @@ function TimelinePanel({
             );
           })}
 
-          <div className="absolute bottom-0 left-2 right-2 h-3 rounded-full border border-[rgba(17,24,39,0.08)] bg-white" />
+          <div className="absolute bottom-0 left-2 right-2 h-3 rounded-full border border-[rgba(10,36,101,0.08)] bg-white" />
         </div>
       </div>
     </div>
@@ -878,7 +878,7 @@ export default function DashboardPage() {
               </div>
               <div className="flex items-center gap-2 self-start rounded-full bg-[#E6FBF8] px-3 py-1.5 text-[13px] font-semibold text-[#0A2465]">
                 AI 사용률 {selectedProfile.aiUsage}%
-                <span className="rounded-full bg-[#40E0D0] px-2 py-0.5 text-[11px] text-[#0A2465]">상</span>
+                <span className="rounded-full bg-[#E6ECF8] px-2 py-0.5 text-[11px] text-[#0A2465]">상</span>
               </div>
             </div>
 
@@ -912,7 +912,7 @@ export default function DashboardPage() {
 
                         return (
                           <div key={item} className="flex items-start gap-3">
-                            <div className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[6px] bg-[#40E0D0] text-[11px] font-semibold text-[#0A2465]">
+                            <div className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-[6px] bg-[#E6ECF8] text-[11px] font-semibold text-[#0A2465]">
                               {index + 1}
                             </div>
                             <p className="text-[14px] leading-7 text-[#5B6B95]">
@@ -943,7 +943,7 @@ export default function DashboardPage() {
               items={selectedProfile.coreRadar}
               benchmarkLabel="핵심인재"
               valueLabel="지원자"
-              applicantColor="#40E0D0"
+              applicantColor="#0A2465"
             />
             <RadarPanel
               title="직무 적합도"
@@ -968,7 +968,7 @@ export default function DashboardPage() {
                     }))
                 ).map((question, index) => (
                   <div key={`${question.point}-${question.text}`} className="flex items-start gap-3">
-                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-[6px] bg-[#40E0D0] text-[11px] font-semibold text-[#0A2465]">
+                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-[6px] bg-[#E6ECF8] text-[11px] font-semibold text-[#0A2465]">
                       {index + 1}
                     </span>
                     <div className="min-w-0">

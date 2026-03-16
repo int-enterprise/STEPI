@@ -17,7 +17,7 @@ function highlight(text: string, emphasis: string[]) {
     out = (
       <>
         {out.slice(0, idx)}
-        <mark className="rounded-md bg-[var(--accent-rose-bg)] px-1 py-0.5 text-[#9a2e47] border border-[rgba(229,106,138,0.25)]">
+        <mark className="rounded-md bg-[rgba(10,36,101,0.04)] px-1 py-0.5 text-[#0A2465] border border-[rgba(10,36,101,0.18)]">
           {key}
         </mark>
         {out.slice(idx + key.length)}
@@ -42,9 +42,9 @@ export function SummaryCard({ candidate }: { candidate: Candidate }) {
         className="pb-2"
       />
       <CardBody className="pt-1">
-        <div className="rounded-[14px] border border-[rgba(229,106,138,0.18)] bg-[var(--accent-rose-bg)] px-4 py-3">
-          <div className="text-[11px] text-[#9a2e47] font-medium">요약</div>
-          <div className="mt-1 space-y-2 text-[13px] leading-[1.7] text-[#1f2937]">
+        <div className="rounded-[14px] border border-[rgba(10,36,101,0.14)] bg-[rgba(10,36,101,0.03)] px-4 py-3">
+          <div className="text-[11px] text-[#0A2465] font-medium">요약</div>
+          <div className="mt-1 space-y-2 text-[13px] leading-[1.7] text-[#000000]">
             {candidate.summaryParagraphs.slice(0, 4).map((p, i) => (
               <p key={i}>{p}</p>
             ))}
@@ -60,7 +60,7 @@ export function SummaryCard({ candidate }: { candidate: Candidate }) {
 
         <div className="mt-3 rounded-[14px] border border-[var(--border)] bg-white px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="text-[12px] font-semibold text-[#111827]">
+            <div className="text-[12px] font-semibold text-[#000000]">
               이력서 주요 내용 요약
             </div>
             <Badge variant="muted">LLM 요약 결과</Badge>
@@ -68,19 +68,19 @@ export function SummaryCard({ candidate }: { candidate: Candidate }) {
 
           <div className="mt-2.5 space-y-3">
             {candidate.resumeHighlights.slice(0, 3).map((sec) => (
-              <div key={sec.title} className="rounded-xl border border-[var(--border)] bg-[rgba(17,24,39,0.015)] px-3.5 py-3">
+              <div key={sec.title} className="rounded-xl border border-[var(--border)] bg-[rgba(10,36,101,0.015)] px-3.5 py-3">
                 <div className="flex items-center justify-between">
-                  <div className="text-[12px] font-medium text-[#111827]">
+                  <div className="text-[12px] font-medium text-[#000000]">
                     {sec.title}
                   </div>
                   <Button size="xs" variant="ghost">
                     보기
                   </Button>
                 </div>
-                <ul className="mt-2 space-y-1.5 text-[12px] leading-[1.6] text-[#374151]">
+                <ul className="mt-2 space-y-1.5 text-[12px] leading-[1.6] text-[#5B6B95]">
                   {sec.bullets.map((b, i) => (
                     <li key={i} className="flex gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[rgba(229,106,138,0.7)] shrink-0" />
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[rgba(10,36,101,0.55)] shrink-0" />
                       <span>{highlight(b, sec.emphasis ?? [])}</span>
                     </li>
                   ))}

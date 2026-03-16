@@ -13,17 +13,17 @@ export function Card({
 }) {
   const toneClass =
     tone === "rose"
-      ? "border-[rgba(229,106,138,0.35)] bg-[var(--surface)]"
+      ? "border-[rgba(91,107,149,0.28)] bg-[var(--surface)]"
       : tone === "amber"
-        ? "border-[rgba(241,176,74,0.35)] bg-[var(--surface)]"
+        ? "border-[rgba(123,141,184,0.30)] bg-[var(--surface)]"
         : tone === "sky"
-          ? "border-[rgba(79,139,214,0.30)] bg-[var(--surface)]"
+          ? "border-[rgba(10,36,101,0.22)] bg-[var(--surface)]"
           : "border-[var(--border)] bg-[var(--surface)]";
 
   return (
     <section
       className={cn(
-        "rounded-[var(--radius)] border shadow-[0_10px_26px_rgba(17,24,39,0.06)]",
+        "rounded-[var(--radius)] border shadow-[0_10px_26px_rgba(10,36,101,0.06)]",
         "overflow-hidden",
         toneClass,
         className
@@ -49,7 +49,7 @@ export function CardHeader({
     <header className={cn("px-4 pt-3.5 pb-2.5", className)}>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[13px] font-semibold tracking-tight text-[#111827]">
+          <div className="text-[13px] font-semibold tracking-tight text-[#000000]">
             {title}
           </div>
           {sub ? (

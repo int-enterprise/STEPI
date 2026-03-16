@@ -19,16 +19,16 @@ export function Badge({
 }) {
   const styles =
     variant === "solid"
-      ? "bg-[#111827] text-white border-transparent"
+      ? "bg-[#000000] text-white border-transparent"
       : variant === "muted"
-        ? "bg-[rgba(17,24,39,0.03)] text-[var(--muted)] border-[var(--border)]"
+        ? "bg-[rgba(10,36,101,0.03)] text-[var(--muted)] border-[var(--border)]"
         : variant === "rose"
-          ? "bg-[var(--accent-rose-bg)] text-[#9a2e47] border-[rgba(229,106,138,0.35)]"
+          ? "bg-[rgba(91,107,149,0.06)] text-[#0A2465] border-[rgba(91,107,149,0.24)]"
           : variant === "amber"
-            ? "bg-[var(--accent-amber-bg)] text-[#7a4a00] border-[rgba(241,176,74,0.35)]"
+            ? "bg-[#FAFAFA] text-[#5B6B95] border-[rgba(123,141,184,0.26)]"
             : variant === "sky"
-              ? "bg-[var(--accent-sky-bg)] text-[#1f4e86] border-[rgba(79,139,214,0.30)]"
-              : "bg-white text-[#111827] border-[var(--border)]";
+              ? "bg-[rgba(10,36,101,0.04)] text-[#0A2465] border-[rgba(10,36,101,0.22)]"
+              : "bg-white text-[#000000] border-[var(--border)]";
 
   return (
     <span

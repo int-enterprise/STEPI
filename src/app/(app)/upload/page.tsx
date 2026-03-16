@@ -68,19 +68,19 @@ export default function UploadPage() {
                   className={cn(
                     "w-full rounded-[14px] border px-4 py-3 text-left transition",
                     active
-                      ? "border-[rgba(79,139,214,0.35)] bg-[var(--accent-sky-bg)]"
-                      : "border-[var(--border)] bg-white hover:bg-[rgba(17,24,39,0.015)]"
+                      ? "border-[rgba(10,36,101,0.22)] bg-[rgba(10,36,101,0.03)]"
+                      : "border-[var(--border)] bg-white hover:bg-[rgba(10,36,101,0.015)]"
                   )}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <div className="text-[13px] font-semibold text-[#111827]">
+                      <div className="text-[13px] font-semibold text-[#000000]">
                         {c.name}
-                        <span className="ml-2 text-[11px] text-[rgba(17,24,39,0.55)] font-normal">
+                        <span className="ml-2 text-[11px] text-[rgba(10,36,101,0.55)] font-normal">
                           {c.gender} · {c.ageGroup}
                         </span>
                       </div>
-                      <div className="mt-0.5 text-[12px] text-[rgba(17,24,39,0.70)]">
+                      <div className="mt-0.5 text-[12px] text-[rgba(10,36,101,0.70)]">
                         {c.appliedRole} · {c.prevCompany} · {c.experienceYears.toFixed(1)}년
                       </div>
                       <div className="mt-1 flex flex-wrap gap-1.5">
@@ -149,13 +149,13 @@ export default function UploadPage() {
             className={cn(
               "mt-1 rounded-[18px] border border-dashed px-6 py-10 transition",
               drag
-                ? "border-[rgba(79,139,214,0.55)] bg-[rgba(79,139,214,0.08)]"
-                : "border-[rgba(17,24,39,0.20)] bg-white"
+                ? "border-[rgba(10,36,101,0.55)] bg-[rgba(10,36,101,0.06)]"
+                : "border-[rgba(10,36,101,0.20)] bg-white"
             )}
           >
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-[14px] font-semibold text-[#111827]">
+                <div className="text-[14px] font-semibold text-[#000000]">
                   파일을 여기로 드롭하세요
                 </div>
                 <div className="mt-1 text-[12px] text-[var(--muted)]">
@@ -173,10 +173,10 @@ export default function UploadPage() {
               ].map((x) => (
                 <div
                   key={x.k}
-                  className="rounded-[14px] border border-[var(--border)] bg-[rgba(17,24,39,0.02)] px-4 py-3"
+                  className="rounded-[14px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] px-4 py-3"
                 >
                   <div className="text-[11px] text-[var(--muted)]">{x.k}</div>
-                  <div className="mt-0.5 text-[13px] font-semibold text-[#111827]">
+                  <div className="mt-0.5 text-[13px] font-semibold text-[#000000]">
                     {x.v}
                   </div>
                 </div>
@@ -187,23 +187,23 @@ export default function UploadPage() {
           <div className="mt-3 grid grid-cols-[1fr_340px] gap-3">
             <div className="rounded-[18px] border border-[var(--border)] bg-white px-5 py-4">
               <div className="flex items-center justify-between">
-                <div className="text-[13px] font-semibold text-[#111827]">
+                <div className="text-[13px] font-semibold text-[#000000]">
                   업로드 상태
                 </div>
                 <Badge variant={progress >= 100 ? "sky" : "muted"}>
                   {progress >= 100 ? "완료" : "대기"}
                 </Badge>
               </div>
-              <div className="mt-3 h-2 w-full rounded-[999px] bg-[rgba(17,24,39,0.06)] overflow-hidden">
+              <div className="mt-3 h-2 w-full rounded-[999px] bg-[rgba(10,36,101,0.06)] overflow-hidden">
                 <div
-                  className="h-full rounded-[999px] bg-[var(--chart-1)] transition-[width] duration-300"
+                  className="h-full rounded-[999px] bg-[#0A2465] transition-[width] duration-300"
                   style={{ width: `${progress}%` }}
                 />
               </div>
               <div className="mt-2 text-[12px] text-[var(--muted)]">
                 {file ? (
                   <>
-                    <b className="text-[#111827]">{file.name}</b> ·{" "}
+                    <b className="text-[#000000]">{file.name}</b> ·{" "}
                     {(file.size / 1024 / 1024).toFixed(2)}MB · {progress}%
                   </>
                 ) : (
@@ -211,11 +211,11 @@ export default function UploadPage() {
                 )}
               </div>
 
-              <div className="mt-4 rounded-[14px] border border-[rgba(79,139,214,0.22)] bg-[var(--accent-sky-bg)] px-4 py-3">
-                <div className="text-[12px] font-semibold text-[#1f4e86]">
+              <div className="mt-4 rounded-[14px] border border-[rgba(10,36,101,0.18)] bg-[rgba(10,36,101,0.04)] px-4 py-3">
+                <div className="text-[12px] font-semibold text-[#0A2465]">
                   선택된 지원자에 평가 연결
                 </div>
-                <div className="mt-1 text-[12px] text-[rgba(31,78,134,0.78)] leading-[1.6]">
+                <div className="mt-1 text-[12px] text-[rgba(10,36,101,0.78)] leading-[1.6]">
                   업로드된 이력서는 <b>{selectedCandidate.name}</b>({selectedCandidate.appliedRole})에게 연결됩니다.
                   평가 시작을 누르면 대시보드 카드가 해당 지원자 기준으로 동기화됩니다.
                 </div>
@@ -224,7 +224,7 @@ export default function UploadPage() {
 
             <div className="rounded-[18px] border border-[var(--border)] bg-white px-5 py-4">
               <div className="flex items-center justify-between">
-                <div className="text-[13px] font-semibold text-[#111827]">
+                <div className="text-[13px] font-semibold text-[#000000]">
                   미리보기
                 </div>
                 <Button
@@ -239,11 +239,11 @@ export default function UploadPage() {
                   초기화
                 </Button>
               </div>
-              <div className="mt-3 rounded-[14px] border border-[var(--border)] bg-[rgba(17,24,39,0.02)] px-4 py-4">
+              <div className="mt-3 rounded-[14px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] px-4 py-4">
                 <div className="text-[11px] text-[var(--muted)]">
                   (목데모) PDF 미리보기 영역
                 </div>
-                <div className="mt-2 h-[180px] rounded-xl border border-[rgba(17,24,39,0.10)] bg-white grid place-items-center text-[12px] text-[rgba(17,24,39,0.60)]">
+                <div className="mt-2 h-[180px] rounded-xl border border-[rgba(10,36,101,0.10)] bg-white grid place-items-center text-[12px] text-[rgba(10,36,101,0.60)]">
                   {file ? "미리보기 준비 완료" : "파일을 업로드하면 표시됩니다"}
                 </div>
               </div>
@@ -262,9 +262,9 @@ export default function UploadPage() {
             </div>
           </div>
 
-          <div className="mt-3 flex items-center justify-between rounded-[14px] border border-[var(--border)] bg-[rgba(17,24,39,0.02)] px-4 py-3">
-            <div className="text-[12px] text-[rgba(17,24,39,0.70)]">
-              현재 선택: <b className="text-[#111827]">{selected.name}</b> ·{" "}
+          <div className="mt-3 flex items-center justify-between rounded-[14px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] px-4 py-3">
+            <div className="text-[12px] text-[rgba(10,36,101,0.70)]">
+              현재 선택: <b className="text-[#000000]">{selected.name}</b> ·{" "}
               {selected.appliedRole}
             </div>
             <Button

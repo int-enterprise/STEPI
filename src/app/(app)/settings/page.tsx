@@ -57,7 +57,7 @@ function SliderRow({
   return (
     <div className="grid grid-cols-[160px_1fr_70px] items-center gap-4 rounded-[14px] border border-[var(--border)] bg-white px-4 py-3">
       <div>
-        <div className="text-[12px] font-medium text-[#111827]">{label}</div>
+        <div className="text-[12px] font-medium text-[#000000]">{label}</div>
         {hint ? (
           <div className="mt-0.5 text-[11px] text-[var(--muted)]">{hint}</div>
         ) : null}
@@ -69,11 +69,11 @@ function SliderRow({
           max={max}
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
-          className="w-full accent-[var(--chart-1)]"
+          className="w-full accent-[#0A2465]"
         />
-        <div className="h-2 w-2 rounded-full bg-[rgba(79,139,214,0.35)]" />
+        <div className="h-2 w-2 rounded-full bg-[rgba(10,36,101,0.35)]" />
       </div>
-      <div className="text-right text-[12px] font-semibold text-[#111827]">
+      <div className="text-right text-[12px] font-semibold text-[#000000]">
         {value}
       </div>
     </div>
@@ -144,7 +144,7 @@ export default function SettingsPage() {
                 {weightSum}/100
               </Badge>
             </div>
-            <div className={cn("text-[11px]", weightSum === 100 ? "text-[var(--muted)]" : "text-[#7a4a00]")}>
+            <div className={cn("text-[11px]", weightSum === 100 ? "text-[var(--muted)]" : "text-[#0A2465]")}>
               {weightSum === 100
                 ? "정상(권장)"
                 : "권장: 기술/경력/프로젝트/커뮤니케이션 가중치 합을 100으로 맞추세요."}
@@ -224,7 +224,7 @@ export default function SettingsPage() {
         <CardBody className="pt-1">
           <div className="space-y-3">
             <div className="rounded-[14px] border border-[var(--border)] bg-white px-4 py-3">
-              <div className="text-[12px] font-medium text-[#111827]">
+              <div className="text-[12px] font-medium text-[#000000]">
                 직무 템플릿 선택
               </div>
               <div className="mt-2">
@@ -245,7 +245,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="rounded-[14px] border border-[var(--border)] bg-white px-4 py-3">
-              <div className="text-[12px] font-medium text-[#111827]">
+              <div className="text-[12px] font-medium text-[#000000]">
                 핵심 인재 기준 프로필
               </div>
               <div className="mt-2">
@@ -264,7 +264,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="rounded-[14px] border border-[var(--border)] bg-white px-4 py-3">
-              <div className="text-[12px] font-medium text-[#111827]">
+              <div className="text-[12px] font-medium text-[#000000]">
                 평가 모델 선택(mock)
               </div>
               <div className="mt-2">
@@ -291,14 +291,14 @@ export default function SettingsPage() {
                 setTimeout(() => setSaved(true), 450);
                 setTimeout(() => setSaved(false), 1200);
               }}
-              className="w-full rounded-[14px] border border-[rgba(241,176,74,0.35)] bg-[var(--accent-amber-bg)] px-4 py-3 text-left transition hover:bg-[rgba(241,176,74,0.16)]"
+              className="w-full rounded-[14px] border border-[rgba(10,36,101,0.22)] bg-[rgba(10,36,101,0.03)] px-4 py-3 text-left transition hover:bg-[rgba(10,36,101,0.05)]"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-[13px] font-semibold text-[#7a4a00]">
+                  <div className="text-[13px] font-semibold text-[#0A2465]">
                     평가 수행
                   </div>
-                  <div className="mt-0.5 text-[11px] text-[rgba(122,74,0,0.72)]">
+                  <div className="mt-0.5 text-[11px] text-[rgba(10,36,101,0.72)]">
                     현재 설정으로 평가를 수행한 것처럼 시뮬레이션합니다.
                   </div>
                 </div>

@@ -23,6 +23,15 @@ type Settings = {
   model: string;
 };
 
+const MODEL_OPTIONS = [
+  { value: "Turing", label: "Turing", enabled: true },
+  { value: "Turing 3.0", label: "Turing 3.0", enabled: false },
+  { value: "Turing 1.0", label: "Turing 1.0", enabled: false },
+] as const;
+
+const PUBLIC_MODEL_OPTIONS = MODEL_OPTIONS.filter((option) => option.enabled);
+const DEFAULT_MODEL = PUBLIC_MODEL_OPTIONS[0]?.value ?? "Turing";
+
 const DEFAULTS: Settings = {
   tech: 28,
   exp: 18,
@@ -36,7 +45,7 @@ const DEFAULTS: Settings = {
   sensitivity: 52,
   roleTemplate: "AI Engineer",
   talentProfile: "핵심인재(기준A)",
-  model: "SmartHire Eval LLM (mock)",
+  model: DEFAULT_MODEL,
 };
 
 function SliderRow({
@@ -84,7 +93,12 @@ export default function SettingsPage() {
   const [s, setS] = useState<Settings>(() => {
     try {
       const raw = localStorage.getItem("stepi_eval_settings");
-      if (raw) return { ...DEFAULTS, ...(JSON.parse(raw) as Partial<Settings>) };
+      if (raw) {
+        const next = { ...DEFAULTS, ...(JSON.parse(raw) as Partial<Settings>) };
+        return PUBLIC_MODEL_OPTIONS.some((option) => option.value === next.model)
+          ? next
+          : { ...next, model: DEFAULT_MODEL };
+      }
     } catch {
       // ignore
     }
@@ -271,11 +285,7 @@ export default function SettingsPage() {
                 <Select
                   value={s.model}
                   onChange={(v) => update("model", v)}
-                  options={[
-                    { value: "SmartHire Eval LLM (mock)", label: "SmartHire Eval LLM (mock)" },
-                    { value: "SmartHire Eval LLM Pro (mock)", label: "SmartHire Eval LLM Pro (mock)" },
-                    { value: "SmartHire Eval LLM Lite (mock)", label: "SmartHire Eval LLM Lite (mock)" },
-                  ]}
+                  options={PUBLIC_MODEL_OPTIONS.map(({ value, label }) => ({ value, label }))}
                   className="w-full"
                 />
               </div>
@@ -313,4 +323,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-

@@ -33,7 +33,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-[999px] border px-2.5 py-1 text-[11px] font-medium",
+        "inline-flex items-center rounded-[999px] border px-2.5 py-1 text-[11px] font-medium whitespace-nowrap",
         styles,
         className
       )}
@@ -42,4 +42,3 @@ export function Badge({
     </span>
   );
 }
-

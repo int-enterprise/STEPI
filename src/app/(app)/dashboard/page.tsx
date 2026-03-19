@@ -499,8 +499,8 @@ function VerticalFitChart({
   }
 
   return (
-    <div className="relative h-[170px]">
-      <div className="absolute inset-x-0 top-5 bottom-9">
+    <div className="relative h-[148px] w-full">
+      <div className="absolute inset-x-0 top-[18px] bottom-9">
         {[25, 50, 75, 100].map((tick) => (
           <div
             key={tick}
@@ -513,7 +513,7 @@ function VerticalFitChart({
       <div className="absolute inset-0 flex items-end justify-between gap-2">
         {items.map((item) => (
           <div key={item.label} className="flex min-w-0 flex-1 flex-col items-center justify-end">
-            <div className="mb-2 text-[16px] font-semibold tracking-[-0.03em] text-[#5B6B95]">
+            <div className="mb-1 text-[16px] font-semibold tracking-[-0.03em] leading-none text-[#5B6B95]">
               {item.value}%
             </div>
             <div className="flex h-[108px] w-full items-end justify-center">
@@ -527,7 +527,7 @@ function VerticalFitChart({
                 }}
               />
             </div>
-            <div className="mt-3 h-8 text-center text-[11px] font-medium leading-[1.15] whitespace-pre-line text-[#5B6B95]">
+            <div className="mt-2 h-8 text-center text-[11px] font-medium leading-[1.15] whitespace-pre-line text-[#5B6B95]">
               {formatLabel(item.label)}
             </div>
           </div>
@@ -861,7 +861,7 @@ export default function DashboardPage() {
               <DetailButton />
             </div>
 
-            <div className="flex-1 overflow-hidden rounded-[14px] bg-[#FAFAFA] px-4 pb-3 pt-4">
+            <div className="overflow-hidden rounded-[14px] bg-[#FAFAFA] px-4 pb-3 pt-0">
               <VerticalFitChart items={selectedProfile.fitBars} />
             </div>
           </div>
@@ -878,7 +878,6 @@ export default function DashboardPage() {
               </div>
               <div className="flex items-center gap-2 self-start rounded-full bg-[#E6FBF8] px-3 py-1.5 text-[13px] font-semibold text-[#0A2465]">
                 AI 사용률 {selectedProfile.aiUsage}%
-                <span className="rounded-full bg-[#E6ECF8] px-2 py-0.5 text-[11px] text-[#0A2465]">상</span>
               </div>
             </div>
 

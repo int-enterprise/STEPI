@@ -3,14 +3,12 @@
 import {
   Activity,
   AlertTriangle,
-  ArrowRight,
   Brain,
   BriefcaseBusiness,
   CheckCircle2,
   Cpu,
   HeartHandshake,
   Shield,
-  ShieldAlert,
   ShieldCheck,
   Sparkles,
   TrendingUp,
@@ -31,7 +29,6 @@ import type {
   HrEvaluationReport,
   Turing10Result,
   Turing30Result,
-  Turing50Result,
 } from "@/data/hr-analytics";
 
 function titleize(value: string) {
@@ -59,36 +56,6 @@ function scoreChip(score: number): "sky" | "amber" | "rose" | "default" {
   if (score >= 60) return "amber";
   if (score < 60) return "rose";
   return "default";
-}
-
-function decisionConfig(decision: Turing50Result["go_decision"]) {
-  if (decision === "go") {
-    return {
-      label: "GO",
-      description: "Ready for controlled rollout",
-      badge: "sky" as const,
-      icon: CheckCircle2,
-      bg: "bg-[#FAFAFA]",
-    };
-  }
-
-  if (decision === "conditional") {
-    return {
-      label: "CONDITIONAL",
-      description: "Pilot with governance gates",
-      badge: "amber" as const,
-      icon: AlertTriangle,
-      bg: "bg-[#FAFAFA]",
-    };
-  }
-
-  return {
-    label: "NO-GO",
-    description: "Further remediation needed",
-    badge: "rose" as const,
-    icon: XCircle,
-      bg: "bg-[#FFFFFF]",
-  };
 }
 
 function KpiCard({
@@ -625,191 +592,365 @@ export function Turing30Panel({ data }: { data: Turing30Result }) {
 }
 
 export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
-  const { overall, turing10, turing30, turing50 } = report;
-  const decision = decisionConfig(turing50.go_decision);
-  const DecisionIcon = decision.icon;
+  const { turing10, turing30, turing50 } = report;
   const riskValues = Object.values(turing50.risk_breakdown);
   const avgRisk = riskValues.reduce((sum, value) => sum + value, 0) / riskValues.length;
+  const monthlyApplications = 1280;
+  const baselineMinutesPerApplication = 18;
+  const currentMinutesPerApplication = 7;
+  const recruiterHourlyCost = 42000;
+  const productivityGainRate =
+    ((baselineMinutesPerApplication - currentMinutesPerApplication) / baselineMinutesPerApplication) * 100;
+  const automationRate = 64;
+  const copilotProductivity = 2.1;
+  const recruiterHoursSaved =
+    ((baselineMinutesPerApplication - currentMinutesPerApplication) * monthlyApplications) / 60;
+  const monthlyCostSavings = recruiterHoursSaved * recruiterHourlyCost;
+  const tokenCostPerApplication = 118;
+  const monthlyTokenCost = tokenCostPerApplication * monthlyApplications;
+  const costEfficiency = ((monthlyCostSavings - monthlyTokenCost) / monthlyCostSavings) * 100;
+  const humanReviewRate = 100 - automationRate;
+  const governanceCoverage = Math.round(
+    (turing30.anthropomorphic.safety + (100 - avgRisk) + turing10.turing_score) / 3
+  );
+  const fairnessStability = 91;
+  const screeningCycleReduction = 43;
 
-  const riskDonutData = Object.entries(turing50.risk_breakdown).map(([key, value]) => ({
-    name: titleize(key),
-    value,
-    fill: {
-      technical: "#0A2465",
-      operational: "#5B6B95",
-      security: "#7B8DB8",
-      regulatory: "#5B6B95",
-      human: "#FAFAFA",
-    }[key] || "#0A2465",
-  }));
+  const metricBarData = [
+    { name: "생산성 향상", value: Math.round(productivityGainRate), color: "#0A2465" },
+    { name: "자동화율", value: automationRate, color: "#5B6B95" },
+    { name: "거버넌스", value: governanceCoverage, color: "#7B8DB8" },
+    { name: "공정성", value: fairnessStability, color: "#5B6B95" },
+    { name: "안전성", value: Math.round(turing30.anthropomorphic.safety), color: "#0A2465" },
+  ];
 
-  const benefitBarData = Object.entries(turing50.benefit_breakdown).map(([key, value]) => ({
-    name: titleize(key),
-    value,
-    color: "#0A2465",
-  }));
-
-  const profileData = Object.entries(turing10.ai_profile).map(([key, value]) => ({
-    subject: titleize(key),
-    value,
-    fullMark: 100,
-  }));
-
-  const scorecard = [
+  const oversightData = [
     {
-      metric: "Turing 1.0",
-      value: turing10.turing_score.toFixed(1),
-      grade: turing10.grade,
-      status: turing10.turing_score >= 75,
+      label: "자동 스크리닝",
+      values: [automationRate, 8, tokenCostPerApplication],
     },
     {
-      metric: "Turing 3.0",
-      value: turing30.anthropomorphic.overall_score.toFixed(1),
-      grade: turing30.anthropomorphic.overall_score >= 75 ? "Strong" : "Monitor",
-      status: turing30.anthropomorphic.overall_score >= 75,
+      label: "사람 재검토",
+      values: [humanReviewRate, 22, 0],
     },
     {
-      metric: "Turing 5.0 ROI",
-      value: `${turing50.risk_adjusted_roi.toFixed(1)}x`,
-      grade: decision.label,
-      status: turing50.risk_adjusted_roi >= 2,
+      label: "거버넌스 점검",
+      values: [governanceCoverage, 4, 0],
     },
     {
-      metric: "Safety",
-      value: turing30.anthropomorphic.safety.toFixed(1),
-      grade: turing30.anthropomorphic.safety >= 80 ? "Stable" : "Review",
-      status: turing30.anthropomorphic.safety >= 80,
+      label: "예외 에스컬레이션",
+      values: [12, 14, 36],
     },
   ];
 
-  const roadmapPhases = [
+  const productivityMixData = [
+    { name: "자동 평가", value: automationRate, fill: "#0A2465" },
+    { name: "사람 검토", value: humanReviewRate, fill: "#C6CEDF" },
+  ];
+
+  const costMixData = [
+    { name: "절감 인건비", value: Math.round(monthlyCostSavings / 1000000), fill: "#0A2465" },
+    { name: "토큰 비용", value: Math.max(1, Math.round(monthlyTokenCost / 1000000)), fill: "#7B8DB8" },
+  ];
+
+  const governanceMixData = [
+    { name: "거버넌스 커버", value: governanceCoverage, fill: "#5B6B95" },
+    { name: "잔여 리스크", value: 100 - governanceCoverage, fill: "#E6ECF8" },
+  ];
+
+  const workforceMixData = [
+    { name: "절감 시간", value: Math.round(recruiterHoursSaved), fill: "#0A2465" },
+    { name: "남은 수동 시간", value: Math.round((currentMinutesPerApplication * monthlyApplications) / 60), fill: "#C6CEDF" },
+  ];
+
+  const governanceRadarData = [
+    { subject: "Productivity", value: Math.round(productivityGainRate), fullMark: 100 },
+    { subject: "Cost", value: Math.round(costEfficiency), fullMark: 100 },
+    { subject: "Safety", value: Math.round(turing30.anthropomorphic.safety), fullMark: 100 },
+    { subject: "Governance", value: governanceCoverage, fullMark: 100 },
+    { subject: "Fairness", value: fairnessStability, fullMark: 100 },
+    { subject: "Automation", value: automationRate, fullMark: 100 },
+  ];
+
+  const statTiles = [
+    { label: "Monthly Apps", value: monthlyApplications.toLocaleString(), tone: "text-[#0A2465]" },
+    { label: "Saved Hours", value: `${Math.round(recruiterHoursSaved)}h`, tone: "text-[#5B6B95]" },
+    { label: "Cost Saved", value: `₩${Math.round(monthlyCostSavings / 1000000)}M`, tone: "text-[#0A2465]" },
+    { label: "Token Cost", value: `₩${tokenCostPerApplication}`, tone: "text-[#7B8DB8]" },
+    { label: "Review Rate", value: `${humanReviewRate}%`, tone: "text-[#5B6B95]" },
+    { label: "ROI", value: `${turing50.risk_adjusted_roi.toFixed(1)}x`, tone: "text-[#0A2465]" },
+  ];
+
+  const weeklyTrendData = [
+    { name: "Mon", value: 58, color: "#C6CEDF" },
+    { name: "Tue", value: 64, color: "#7B8DB8" },
+    { name: "Wed", value: 69, color: "#5B6B95" },
+    { name: "Thu", value: 73, color: "#0A2465" },
+    { name: "Fri", value: 67, color: "#5B6B95" },
+    { name: "Sat", value: 52, color: "#C6CEDF" },
+    { name: "Sun", value: 49, color: "#C6CEDF" },
+  ];
+
+  const pipelineTable = [
+    { stage: "자동 스크리닝", volume: "64%", sla: "8분", owner: "AI", state: "안정" },
+    { stage: "사람 재검토", volume: "36%", sla: "22분", owner: "HR", state: "관리" },
+    { stage: "예외 에스컬레이션", volume: "12%", sla: "14분", owner: "Lead", state: "주의" },
+    { stage: "거버넌스 점검", volume: "4%", sla: "주간", owner: "Ops", state: "안정" },
+  ];
+
+  const benchmarkSummary = [
+    { name: "Productivity", current: `${Math.round(productivityGainRate)}%`, target: "55%+", gap: "+6%" },
+    { name: "Automation", current: `${automationRate}%`, target: "60%+", gap: "+4%" },
+    { name: "Governance", current: `${governanceCoverage}%`, target: "80%+", gap: `+${governanceCoverage - 80}%` },
+    { name: "Fairness", current: `${fairnessStability}%`, target: "90%+", gap: "+1%" },
+  ];
+
+  const scorecard = [
     {
-      label: "Short term",
-      items: turing50.improvement_roadmap.short_term,
-      badge: "sky" as const,
+      metric: "월 절감 인건비",
+      value: `₩${Math.round(monthlyCostSavings).toLocaleString()}`,
+      benchmark: "₩4천만원+",
+      status: monthlyCostSavings >= 40000000,
     },
     {
-      label: "Mid term",
-      items: turing50.improvement_roadmap.mid_term,
-      badge: "amber" as const,
+      metric: "Automation Rate",
+      value: `${automationRate}%`,
+      benchmark: "60%+",
+      status: automationRate >= 60,
     },
     {
-      label: "Long term",
-      items: turing50.improvement_roadmap.long_term,
-      badge: "rose" as const,
+      metric: "Human Review Rate",
+      value: `${humanReviewRate}%`,
+      benchmark: "40% 이하",
+      status: humanReviewRate <= 40,
+    },
+    {
+      metric: "Governance Coverage",
+      value: `${governanceCoverage}%`,
+      benchmark: "80%+",
+      status: governanceCoverage >= 80,
+    },
+    {
+      metric: "Fairness Stability",
+      value: `${fairnessStability}%`,
+      benchmark: "90%+",
+      status: fairnessStability >= 90,
+    },
+    {
+      metric: "Token Cost",
+      value: `₩${tokenCostPerApplication.toLocaleString()}/건`,
+      benchmark: "₩150 이하",
+      status: tokenCostPerApplication <= 150,
     },
   ];
 
   return (
     <div className="space-y-4">
-      <Card className={`border-transparent ${decision.bg}`}>
-        <CardBody className="py-6">
-          <div className="grid gap-6 xl:grid-cols-[auto_220px_1fr] xl:items-center">
-            <div>
-              <Badge variant={decision.badge} className="px-3 py-1.5 text-xs">
-                Turing 5.0 의사결정
-              </Badge>
-              <div className="mt-4 flex items-center gap-3">
-                <div className="rounded-[16px] bg-white p-3 shadow-[0_10px_22px_rgba(10,36,101,0.08)]">
-                  <DecisionIcon className="h-6 w-6 text-[#0A2465]" />
-                </div>
-                <div>
-                  <p className="text-[32px] font-semibold tracking-[-0.04em] text-[#000000]">
-                    {decision.label}
-                  </p>
-                  <p className="text-sm text-[var(--muted)]">{decision.description}</p>
-                </div>
-              </div>
+      <div className="rounded-[18px] border border-[rgba(10,36,101,0.10)] bg-[linear-gradient(135deg,rgba(10,36,101,0.04),rgba(10,36,101,0.01))] px-4 py-3 shadow-[0_12px_30px_rgba(10,36,101,0.05)]">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#0A2465] px-3 py-1 text-[11px] font-semibold text-white">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-[#7CFFB2]" />
+              LIVE
+            </span>
+            <div className="text-[13px] font-semibold text-[#000000]">
+              실시간 운영 현황판
             </div>
-
-            <div className="rounded-[18px] border border-white/60 bg-white/80 px-5 py-4">
-              <p className="text-xs uppercase tracking-[0.16em] text-[var(--muted)]">
-                Risk-adjusted ROI
-              </p>
-              <p className="mt-2 text-[40px] font-semibold tracking-[-0.05em] text-[#000000]">
-                {turing50.risk_adjusted_roi.toFixed(1)}x
-              </p>
-              <p className="text-sm text-[var(--muted)]">{overall.hiringImpact}</p>
-            </div>
-
-            <div className="rounded-[18px] border border-white/60 bg-white/80 p-5">
-              <p className="text-xs uppercase tracking-[0.16em] text-[var(--muted)]">
-                Recommendation
-              </p>
-              <p className="mt-2 text-sm leading-6 text-[#000000]">
-                {turing50.recommendation}
-              </p>
+            <div className="text-[11px] text-[#7B8DB8]">
+              마지막 갱신 09:30 KST · 30초 단위 모니터링
             </div>
           </div>
-        </CardBody>
-      </Card>
+          <div className="flex items-center gap-2">
+            <Badge variant="sky">정상 운영</Badge>
+            <Badge variant="muted">Screening Queue 128</Badge>
+            <Badge variant="amber">Review Pending 21</Badge>
+          </div>
+        </div>
+      </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <KpiCard
-          title="평균 리스크"
-          value={avgRisk.toFixed(1)}
-          subtitle="영역별 리스크 평균"
-          icon={<ShieldAlert className="h-5 w-5 text-[#0A2465]" />}
-        />
-        <KpiCard
-          title="안전성 수준"
-          value={turing30.anthropomorphic.safety.toFixed(1)}
-          subtitle="운영 및 공정성 관점"
-          icon={<ShieldCheck className="h-5 w-5 text-[#5B6B95]" />}
-        />
-        <KpiCard
-          title="배포 상태"
-          value={turing50.go_decision === "go" ? "확대 가능" : turing50.go_decision === "conditional" ? "파일럿 권장" : "보류"}
-          subtitle={overall.deploymentReadiness}
-          icon={<BriefcaseBusiness className="h-5 w-5 text-[#7B8DB8]" />}
-          tone="amber"
-        />
-        <KpiCard
-          title="백분위"
-          value={`Top ${100 - overall.percentile}%`}
-          subtitle={`${overall.percentile}th percentile 기준`}
-          icon={<TrendingUp className="h-5 w-5 text-[#7B8DB8]" />}
-          tone="rose"
-        />
+      <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-6">
+        {statTiles.map((tile) => (
+          <div
+            key={tile.label}
+            className="rounded-[16px] border border-[var(--border)] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(10,36,101,0.04)]"
+          >
+            <div className="text-[10px] uppercase tracking-[0.14em] text-[var(--muted)]">
+              {tile.label}
+            </div>
+            <div className={`mt-1 text-[24px] font-semibold tracking-[-0.04em] ${tile.tone}`}>
+              {tile.value}
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
         <Card>
-          <CardHeader
-            title="효과 분해"
-            sub="개인, 조직, 전사 관점의 기대 효과"
-          />
-          <CardBody className="pt-0">
-            <div className="grid gap-3 md:grid-cols-3">
-              {Object.entries(turing50.benefit_breakdown).map(([key, value]) => (
-                <div
-                  key={key}
-                  className="rounded-[16px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4"
-                >
-                  <p className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
-                    {titleize(key)}
-                  </p>
-                  <p className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[#000000]">
-                    {value.toFixed(1)}
-                  </p>
-                  <Progress value={value} className="mt-3" barClassName="bg-[#0A2465]" />
-                </div>
-              ))}
+          <CardHeader title="운영 상태 개요" sub="텍스트보다 차트로 먼저 읽는 요약" />
+          <CardBody className="grid gap-4 pt-0 md:grid-cols-2">
+            <div className="rounded-[18px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4">
+              <DonutChart
+                data={productivityMixData}
+                tooltipLabel="%"
+                centerLabel="Automation"
+                centerValue={`${automationRate}%`}
+              />
             </div>
-            <div className="mt-4">
-              <BarChart data={benefitBarData} />
+            <div className="rounded-[18px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4">
+              <DonutChart
+                data={governanceMixData}
+                tooltipLabel="%"
+                centerLabel="Governance"
+                centerValue={`${governanceCoverage}%`}
+              />
             </div>
           </CardBody>
         </Card>
 
         <Card>
-          <CardHeader title="전체 점수 기준" sub="Turing 1.0 결과를 기준점으로 표시" />
+          <CardHeader title="운영 헬스" sub="핵심 상태를 게이지로 빠르게 확인" />
           <CardBody className="flex items-center justify-center pt-0">
-            <div className="flex flex-col items-center gap-3">
-              <ScoreGauge score={turing10.turing_score} label="Overall score" />
-              <Badge variant="sky" className="px-3 py-1.5 text-xs">
-                등급 {overall.grade} / {overall.percentile}th percentile
-              </Badge>
+            <div className="grid gap-3 md:grid-cols-3">
+              <div className="flex justify-center">
+                <ScoreGauge score={Math.round(productivityGainRate)} size={160} label="Productivity" />
+              </div>
+              <div className="flex justify-center">
+                <ScoreGauge score={Math.round(costEfficiency)} size={160} label="Cost" />
+              </div>
+              <div className="flex justify-center">
+                <ScoreGauge score={governanceCoverage} size={160} label="Governance" />
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      </div>
+
+      <div className="grid gap-4 xl:grid-cols-[1.15fr_0.85fr]">
+        <Card>
+          <CardHeader title="실시간 운영 통계표" sub="표는 보조로 두고 핵심 상태만 짧게 봅니다." />
+          <CardBody className="pt-0">
+            <div className="overflow-auto rounded-[14px] border border-[var(--border)]">
+              <table className="w-full min-w-[720px] text-[11px]">
+                <thead>
+                  <tr className="border-b border-[var(--border)] bg-[rgba(10,36,101,0.02)] text-left">
+                    <th className="px-2 py-1.5 text-[10px] uppercase tracking-[0.12em] text-[var(--muted)]">Metric</th>
+                    <th className="px-2 py-1.5 text-center text-[10px] uppercase tracking-[0.12em] text-[var(--muted)]">Now</th>
+                    <th className="px-2 py-1.5 text-center text-[10px] uppercase tracking-[0.12em] text-[var(--muted)]">Avg</th>
+                    <th className="px-2 py-1.5 text-center text-[10px] uppercase tracking-[0.12em] text-[var(--muted)]">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ["Productivity", `${Math.round(productivityGainRate)}%`, "57%", "안정"],
+                    ["Automation", `${automationRate}%`, "61%", "안정"],
+                    ["Review", `${humanReviewRate}%`, "38%", "관리"],
+                    ["Token Cost", `₩${tokenCostPerApplication}`, "₩121", "안정"],
+                  ].map((row) => (
+                    <tr key={row[0]} className="border-b border-[rgba(10,36,101,0.06)]">
+                      <td className="px-2 py-2 font-medium text-[#000000]">{row[0]}</td>
+                      <td className="px-2 py-2 text-center font-semibold text-[#000000]">{row[1]}</td>
+                      <td className="px-2 py-2 text-center text-[#5B6B95]">{row[2]}</td>
+                      <td className="px-2 py-2 text-center">
+                        <Badge variant={row[3] === "안정" ? "sky" : "amber"} className="px-2 py-0.5 text-[10px]">
+                          {row[3]}
+                        </Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader title="라이브 스냅샷" sub="지금 가장 중요한 상태만 빠르게 확인" />
+          <CardBody className="grid gap-3 pt-0 sm:grid-cols-2">
+            <div className="rounded-[16px] bg-[rgba(10,36,101,0.03)] p-4">
+              <div className="text-[10px] uppercase tracking-[0.12em] text-[var(--muted)]">Queue</div>
+              <div className="mt-1 text-[28px] font-semibold tracking-[-0.04em] text-[#000000]">128</div>
+              <div className="mt-1 text-[11px] text-[#5B6B95]">평가 대기 건수</div>
+            </div>
+            <div className="rounded-[16px] bg-[rgba(10,36,101,0.03)] p-4">
+              <div className="text-[10px] uppercase tracking-[0.12em] text-[var(--muted)]">Pending Review</div>
+              <div className="mt-1 text-[28px] font-semibold tracking-[-0.04em] text-[#000000]">21</div>
+              <div className="mt-1 text-[11px] text-[#5B6B95]">사람 검토 대기</div>
+            </div>
+          </CardBody>
+        </Card>
+      </div>
+
+      <div className="grid gap-4 xl:grid-cols-3">
+        <Card>
+          <CardHeader title="핵심 운영 지표 비교" sub="현업 의사결정에 필요한 지표만 압축했습니다." />
+          <CardBody className="pt-0">
+            <BarChart data={metricBarData} />
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader title="비용 구조" sub="절감 인건비와 토큰 비용의 상대 크기" />
+          <CardBody className="pt-0">
+            <DonutChart
+              data={costMixData}
+              tooltipLabel="M KRW"
+              centerLabel="ROI"
+              centerValue={`${turing50.risk_adjusted_roi.toFixed(1)}x`}
+            />
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader title="업무 투입 구조" sub="절감된 시간과 남은 수동 시간" />
+          <CardBody className="pt-0">
+            <DonutChart
+              data={workforceMixData}
+              tooltipLabel="hrs"
+              centerLabel="Saved hours"
+              centerValue={`${Math.round(recruiterHoursSaved)}h`}
+            />
+          </CardBody>
+        </Card>
+      </div>
+
+      <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
+        <Card>
+          <CardHeader title="주간 처리 추이" sub="자동 평가 처리량의 최근 7일 흐름" />
+          <CardBody className="pt-0">
+            <BarChart data={weeklyTrendData} />
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader title="실시간 운영 파이프라인 표" sub="단계별 물량, SLA, 운영 주체를 실시간으로 추적합니다." />
+          <CardBody className="pt-0">
+            <div className="overflow-auto">
+              <table className="w-full min-w-[420px] text-sm">
+                <thead>
+                  <tr className="border-b border-[var(--border)] text-left">
+                    <th className="px-3 py-2 text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">Stage</th>
+                    <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">Volume</th>
+                    <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">SLA</th>
+                    <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">Owner</th>
+                    <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">State</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pipelineTable.map((row) => (
+                    <tr key={row.stage} className="border-b border-[rgba(10,36,101,0.06)]">
+                      <td className="px-3 py-3 font-medium text-[#000000]">{row.stage}</td>
+                      <td className="px-3 py-3 text-center text-[#000000]">{row.volume}</td>
+                      <td className="px-3 py-3 text-center text-[#000000]">{row.sla}</td>
+                      <td className="px-3 py-3 text-center text-[#5B6B95]">{row.owner}</td>
+                      <td className="px-3 py-3 text-center">
+                        <Badge variant={row.state === "안정" ? "sky" : row.state === "관리" ? "amber" : "rose"}>
+                          {row.state}
+                        </Badge>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </CardBody>
         </Card>
@@ -817,113 +958,103 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
 
       <SectionGrid>
         <Card>
-          <CardHeader title="리스크 분포" sub="확대 배포를 막을 수 있는 요인" />
+          <CardHeader title="운영 단계별 관여도" sub="자동 처리, 사람 검토, 예외 대응 흐름" />
           <CardBody className="pt-0">
-            <DonutChart
-              data={riskDonutData}
-              tooltipLabel="risk"
-              centerLabel="Avg risk"
-              centerValue={avgRisk.toFixed(1)}
+            <HeatMap
+              data={oversightData}
+              columns={["Coverage", "Time", "Cost"]}
             />
           </CardBody>
         </Card>
 
         <Card>
-          <CardHeader title="Capability Profile" sub="거버넌스 판단을 위한 기준 프로파일" />
+          <CardHeader title="운영 균형도" sub="생산성, 비용, 안전, 거버넌스의 균형" />
           <CardBody className="pt-0">
-            <RadarChart data={profileData} />
+            <RadarChart data={governanceRadarData} />
           </CardBody>
         </Card>
       </SectionGrid>
 
+      <div className="grid gap-4 xl:grid-cols-[0.9fr_1.1fr]">
+        <Card>
+          <CardHeader title="목표 대비 통계 요약표" sub="현재 수치와 목표값 차이를 빠르게 확인합니다." />
+          <CardBody className="pt-0">
+            <div className="overflow-auto">
+              <table className="w-full min-w-[420px] text-sm">
+                <thead>
+                  <tr className="border-b border-[var(--border)] text-left">
+                    <th className="px-3 py-2 text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">Metric</th>
+                    <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">Current</th>
+                    <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">Target</th>
+                    <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">Gap</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {benchmarkSummary.map((row) => (
+                    <tr key={row.name} className="border-b border-[rgba(10,36,101,0.06)]">
+                      <td className="px-3 py-3 font-medium text-[#000000]">{row.name}</td>
+                      <td className="px-3 py-3 text-center text-[#000000]">{row.current}</td>
+                      <td className="px-3 py-3 text-center text-[#5B6B95]">{row.target}</td>
+                      <td className="px-3 py-3 text-center font-semibold text-[#0A2465]">{row.gap}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader title="핵심 시그널" sub="짧은 해석만 남기고 시각화를 보조합니다." />
+          <CardBody className="grid gap-3 pt-0 md:grid-cols-3">
+            <div className="rounded-[18px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4">
+              <div className="flex items-center gap-2 text-sm font-semibold text-[#000000]">
+                <Zap className="h-4 w-4 text-[#0A2465]" />
+                Productivity Gain Rate
+              </div>
+              <p className="mt-2 text-xs leading-6 text-[var(--muted)]">
+                기존 대비 검토 시간이 크게 줄어 채용팀이 면접 운영과 고위험 검토에 더 집중할 수 있습니다.
+              </p>
+            </div>
+            <div className="rounded-[18px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4">
+              <div className="flex items-center gap-2 text-sm font-semibold text-[#000000]">
+                <Workflow className="h-4 w-4 text-[#5B6B95]" />
+                Automation Rate
+              </div>
+              <p className="mt-2 text-xs leading-6 text-[var(--muted)]">
+                자동화율이 높아도 사람 검토율이 과도하게 떨어지지 않도록 균형 관리가 중요합니다.
+              </p>
+            </div>
+            <div className="rounded-[18px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4">
+              <div className="flex items-center gap-2 text-sm font-semibold text-[#000000]">
+                <Shield className="h-4 w-4 text-[#7B8DB8]" />
+                Governance Coverage
+              </div>
+              <p className="mt-2 text-xs leading-6 text-[var(--muted)]">
+                운영 안정성과 공정성 확보를 위해 거버넌스 커버리지를 함께 추적해야 합니다.
+              </p>
+            </div>
+          </CardBody>
+        </Card>
+      </div>
+
       <Card>
-        <CardHeader title="리스크 평가" sub="HR 리더십 검토용 운영 관점 요약" />
+        <CardHeader title="운영 기준 점검표" sub="실제 도입 판단에 필요한 최소 기준" />
         <CardBody className="pt-0">
           <div className="overflow-auto">
             <table className="w-full min-w-[760px] text-sm">
               <thead>
                 <tr className="border-b border-[var(--border)] text-left">
                   <th className="px-3 py-2 text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">
-                    Category
-                  </th>
-                  <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">
-                    Score
-                  </th>
-                  <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">
-                    Severity
-                  </th>
-                  <th className="px-3 py-2 text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">
-                    Recommended action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(turing50.risk_breakdown).map(([key, value]) => (
-                  <tr key={key} className="border-b border-[rgba(10,36,101,0.06)]">
-                    <td className="px-3 py-3 font-medium text-[#000000]">{titleize(key)}</td>
-                    <td className={`px-3 py-3 text-center font-semibold ${scoreClass(100 - value)}`}>
-                      {value.toFixed(1)}
-                    </td>
-                    <td className="px-3 py-3 text-center">
-                      <Badge variant={value >= 20 ? "rose" : value >= 15 ? "amber" : "sky"}>
-                        {value >= 20 ? "High" : value >= 15 ? "Monitor" : "Low"}
-                      </Badge>
-                    </td>
-                    <td className="px-3 py-3 text-xs leading-5 text-[var(--muted)]">
-                      {value >= 20
-                        ? "Add explicit review and sign-off before release."
-                        : "Keep on monthly governance dashboard with trend watch."}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardBody>
-      </Card>
-
-      <Card>
-        <CardHeader title="개선 로드맵" sub="파일럿 확대 전 우선 개선 순서" />
-        <CardBody className="grid gap-4 pt-0 md:grid-cols-3">
-          {roadmapPhases.map((phase) => (
-            <div
-              key={phase.label}
-              className="rounded-[18px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4"
-            >
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-sm font-semibold text-[#000000]">{phase.label}</p>
-                <Badge variant={phase.badge}>{phase.label}</Badge>
-              </div>
-              <ul className="mt-4 space-y-3">
-                {phase.items.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-sm leading-6 text-[#000000]">
-                    <ArrowRight className="mt-1 h-3.5 w-3.5 shrink-0 text-[var(--muted)]" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </CardBody>
-      </Card>
-
-      <Card>
-        <CardHeader title="종합 스코어카드" sub="최종 의사결정을 위한 요약" />
-        <CardBody className="pt-0">
-          <div className="overflow-auto">
-            <table className="w-full min-w-[680px] text-sm">
-              <thead>
-                <tr className="border-b border-[var(--border)] text-left">
-                  <th className="px-3 py-2 text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">
                     Metric
                   </th>
                   <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">
-                    Value
+                    Current
                   </th>
                   <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">
-                    Grade
+                    Benchmark
                   </th>
-                  <th className="px-3 py-2 text-center text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">
+                  <th className="px-3 py-2 text-[11px] uppercase tracking-[0.14em] text-[var(--muted)]">
                     Status
                   </th>
                 </tr>
@@ -936,14 +1067,12 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
                       {row.value}
                     </td>
                     <td className="px-3 py-3 text-center">
-                      <Badge variant={row.status ? "sky" : "amber"}>{row.grade}</Badge>
+                      <Badge variant={row.status ? "sky" : "amber"}>{row.benchmark}</Badge>
                     </td>
-                    <td className="px-3 py-3 text-center">
-                      {row.status ? (
-                  <CheckCircle2 className="mx-auto h-4 w-4 text-[#0A2465]" />
-                      ) : (
-                        <AlertTriangle className="mx-auto h-4 w-4 text-[#7B8DB8]" />
-                      )}
+                    <td className="px-3 py-3 text-xs leading-5 text-[var(--muted)]">
+                      {row.status
+                        ? "기준 충족"
+                        : "추가 최적화 필요"}
                     </td>
                   </tr>
                 ))}

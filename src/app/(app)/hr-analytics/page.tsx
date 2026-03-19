@@ -1,16 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import {
-  BarChart3,
-  Brain,
-  ShieldCheck,
-  Sparkles,
-  Users,
-} from "lucide-react";
+import { ShieldCheck, Sparkles } from "lucide-react";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/Badge";
-import { Tabs } from "@/components/hr-analytics/Tabs";
 import {
   Turing10Panel,
   Turing30Panel,
@@ -18,67 +9,37 @@ import {
 } from "@/components/hr-analytics/TuringPanels";
 import { MOCK_HR_EVALUATION } from "@/data/hr-analytics";
 
-const TAB_META = {
+const TURING_PANELS = {
   turing10: {
-    title: "Turing 1.0",
+    title: "Turing",
     description: "핵심 벤치마크, 역량 프로파일, 스크리닝 품질 결과",
+    render: () => <Turing10Panel data={MOCK_HR_EVALUATION.turing10} />,
   },
   turing30: {
-    title: "Turing 3.0",
+    title: "Turing",
     description: "업무 시나리오 적합도, 협업 행동, 운영 안정성 결과",
+    render: () => <Turing30Panel data={MOCK_HR_EVALUATION.turing30} />,
   },
   turing50: {
-    title: "Turing 5.0",
-    description: "비즈니스 효과, 거버넌스 리스크, 배포 권고안",
+    title: "Turing",
+    description: "현업 운영 효과, 비용 절감, 거버넌스 안정성 평가",
+    render: () => <Turing50Panel report={MOCK_HR_EVALUATION} />,
   },
 } as const;
 
+const PUBLIC_TURING_KEY: keyof typeof TURING_PANELS = "turing50";
+
 export default function HrAnalyticsPage() {
-  const [activeTab, setActiveTab] = useState<keyof typeof TAB_META>("turing10");
-
-  const tabs = [
-    {
-      id: "turing10",
-      label: "Turing 1.0",
-      icon: <Brain className="h-4 w-4" />,
-      description: "역량 점수와 벤치마크 근거",
-    },
-    {
-      id: "turing30",
-      label: "Turing 3.0",
-      icon: <Users className="h-4 w-4" />,
-      description: "업무 시뮬레이션과 협업 품질",
-    },
-    {
-      id: "turing50",
-      label: "Turing 5.0",
-      icon: <BarChart3 className="h-4 w-4" />,
-      description: "ROI, 거버넌스, 배포 준비도",
-    },
-  ];
-
-  const activeMeta = TAB_META[activeTab];
+  const activeMeta = TURING_PANELS[PUBLIC_TURING_KEY];
 
   return (
     <div className="space-y-4">
-      <div className="space-y-4">
-        <Tabs tabs={tabs} value={activeTab} onChange={(value) => setActiveTab(value as keyof typeof TAB_META)} />
-
-        <Card>
-          <CardHeader title={activeMeta.title} sub={activeMeta.description} />
-          <CardBody className="pt-0">
-            {activeTab === "turing10" ? (
-              <Turing10Panel data={MOCK_HR_EVALUATION.turing10} />
-            ) : null}
-            {activeTab === "turing30" ? (
-              <Turing30Panel data={MOCK_HR_EVALUATION.turing30} />
-            ) : null}
-            {activeTab === "turing50" ? (
-              <Turing50Panel report={MOCK_HR_EVALUATION} />
-            ) : null}
-          </CardBody>
-        </Card>
-      </div>
+      <Card>
+        <CardHeader title={activeMeta.title} />
+        <CardBody className="pt-0">
+          {activeMeta.render()}
+        </CardBody>
+      </Card>
 
       <div className="grid gap-4 xl:grid-cols-2">
         <Card tone="sky">

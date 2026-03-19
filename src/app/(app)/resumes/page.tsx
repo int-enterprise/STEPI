@@ -40,7 +40,15 @@ export default function ResumesPage() {
           sub="지원자 목록 조회 · 업로드 상태 · 평가 완료 여부"
           right={
             <div className="flex items-center gap-2">
-              <Button variant="outline">PDF/DOCX 업로드</Button>
+              <Button
+                variant="outline"
+                className="whitespace-nowrap"
+                onClick={() => {
+                  window.location.href = "/upload";
+                }}
+              >
+                PDF/DOCX 업로드
+              </Button>
               <Button variant="primary">신규 지원자</Button>
             </div>
           }
@@ -116,6 +124,7 @@ export default function ResumesPage() {
                 <div className="flex items-center justify-end gap-2">
                   <Button
                     size="xs"
+                    className="whitespace-nowrap"
                     onClick={() => {
                       setSelectedId(c.id);
                       window.location.href = "/dashboard";
@@ -123,10 +132,10 @@ export default function ResumesPage() {
                   >
                     대시보드
                   </Button>
-                  <Button size="xs" variant="outline">
+                  <Button size="xs" variant="outline" className="whitespace-nowrap">
                     수정
                   </Button>
-                  <Button size="xs" variant="ghost">
+                  <Button size="xs" variant="ghost" className="whitespace-nowrap">
                     삭제
                   </Button>
                 </div>
@@ -180,4 +189,3 @@ export default function ResumesPage() {
     </div>
   );
 }
-

@@ -8,6 +8,7 @@ interface DonutChartProps {
   tooltipLabel?: string;
   centerLabel?: string;
   centerValue?: string;
+  size?: "sm" | "md";
 }
 
 function CustomTooltip({
@@ -38,9 +39,16 @@ export function DonutChart({
   tooltipLabel,
   centerLabel,
   centerValue,
+  size = "md",
 }: DonutChartProps) {
+  const chartHeight = size === "sm" ? 220 : 280;
+  const innerRadius = size === "sm" ? 52 : 66;
+  const outerRadius = size === "sm" ? 82 : 104;
+  const valueClass = size === "sm" ? "text-2xl" : "text-3xl";
+  const labelClass = size === "sm" ? "text-[11px]" : "text-xs";
+
   return (
-    <div className="relative h-[280px]">
+    <div className="relative" style={{ height: chartHeight }}>
       <ClientOnly fallback={<div className="h-full w-full" />}>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -49,8 +57,8 @@ export function DonutChart({
               dataKey="value"
               cx="50%"
               cy="50%"
-              innerRadius={66}
-              outerRadius={104}
+              innerRadius={innerRadius}
+              outerRadius={outerRadius}
               paddingAngle={2}
               strokeWidth={0}
             >
@@ -66,10 +74,10 @@ export function DonutChart({
       </ClientOnly>
       {centerLabel ? (
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-3xl font-semibold tracking-[-0.04em] text-[#000000]">
+          <span className={`${valueClass} font-semibold tracking-[-0.04em] text-[#000000]`}>
             {centerValue}
           </span>
-          <span className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+          <span className={`${labelClass} uppercase tracking-[0.14em] text-[var(--muted)]`}>
             {centerLabel}
           </span>
         </div>

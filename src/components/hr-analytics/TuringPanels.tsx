@@ -20,11 +20,23 @@ import {
 import { Badge } from "@/components/ui/Badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/Card";
 import { Progress } from "@/components/hr-analytics/Progress";
+import { ClientOnly } from "@/components/utils/ClientOnly";
 import { BarChart } from "@/components/hr-analytics/charts/BarChart";
 import { DonutChart } from "@/components/hr-analytics/charts/DonutChart";
 import { HeatMap } from "@/components/hr-analytics/charts/HeatMap";
 import { RadarChart } from "@/components/hr-analytics/charts/RadarChart";
 import { ScoreGauge } from "@/components/hr-analytics/charts/ScoreGauge";
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import type {
   HrEvaluationReport,
   Turing10Result,
@@ -100,6 +112,111 @@ function KpiCard({
 
 function SectionGrid({ children }: { children: React.ReactNode }) {
   return <div className="grid gap-4 lg:grid-cols-2">{children}</div>;
+}
+
+function LiveTooltip({
+  active,
+  payload,
+  label,
+}: {
+  active?: boolean;
+  payload?: Array<{ name?: string; value?: number; color?: string }>;
+  label?: string;
+}) {
+  if (!active || !payload || payload.length === 0) return null;
+
+  return (
+    <div className="rounded-[12px] border border-[rgba(10,36,101,0.12)] bg-white px-3 py-2 shadow-[0_12px_26px_rgba(10,36,101,0.12)]">
+      <div className="text-[11px] font-medium text-[var(--muted)]">{label}</div>
+      <div className="mt-1 space-y-1">
+        {payload.map((item, index) => (
+          <div key={`${item.name}-${index}`} className="flex items-center justify-between gap-3 text-[11px]">
+            <span className="flex items-center gap-2 text-[#000000]">
+              <span
+                className="h-2 w-2 rounded-full"
+                style={{ backgroundColor: item.color || "#0A2465" }}
+              />
+              {item.name}
+            </span>
+            <span className="font-semibold text-[#000000]">{item.value}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LiveAreaPanel({
+  data,
+}: {
+  data: Array<{ time: string; screening: number; review: number; queue: number }>;
+}) {
+  return (
+    <div className="h-[320px]">
+      <ClientOnly fallback={<div className="h-full w-full" />}>
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={data} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+            <defs>
+              <linearGradient id="screeningFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#0A2465" stopOpacity={0.38} />
+                <stop offset="100%" stopColor="#0A2465" stopOpacity={0.04} />
+              </linearGradient>
+              <linearGradient id="reviewFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#5B6B95" stopOpacity={0.34} />
+                <stop offset="100%" stopColor="#5B6B95" stopOpacity={0.05} />
+              </linearGradient>
+              <linearGradient id="queueFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#7B8DB8" stopOpacity={0.28} />
+                <stop offset="100%" stopColor="#7B8DB8" stopOpacity={0.04} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid stroke="rgba(10,36,101,0.08)" strokeDasharray="3 3" vertical={false} />
+            <XAxis dataKey="time" tick={{ fontSize: 10, fill: "rgba(10,36,101,0.55)" }} axisLine={false} tickLine={false} />
+            <YAxis tick={{ fontSize: 10, fill: "rgba(10,36,101,0.45)" }} axisLine={false} tickLine={false} />
+            <Tooltip content={<LiveTooltip />} />
+            <Area type="monotone" dataKey="queue" stackId="1" stroke="#7B8DB8" fill="url(#queueFill)" strokeWidth={2} />
+            <Area type="monotone" dataKey="review" stackId="1" stroke="#5B6B95" fill="url(#reviewFill)" strokeWidth={2} />
+            <Area type="monotone" dataKey="screening" stackId="1" stroke="#0A2465" fill="url(#screeningFill)" strokeWidth={2} />
+          </AreaChart>
+        </ResponsiveContainer>
+      </ClientOnly>
+    </div>
+  );
+}
+
+function LiveLinePanel({
+  data,
+  label,
+  color,
+  unit,
+}: {
+  data: Array<{ time: string; value: number }>;
+  label: string;
+  color: string;
+  unit: string;
+}) {
+  return (
+    <div className="h-[140px]">
+      <ClientOnly fallback={<div className="h-full w-full" />}>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data} margin={{ top: 8, right: 8, left: -24, bottom: 0 }}>
+            <CartesianGrid stroke="rgba(10,36,101,0.08)" strokeDasharray="3 3" vertical={false} />
+            <XAxis dataKey="time" tick={{ fontSize: 10, fill: "rgba(10,36,101,0.55)" }} axisLine={false} tickLine={false} />
+            <YAxis tick={{ fontSize: 10, fill: "rgba(10,36,101,0.45)" }} axisLine={false} tickLine={false} />
+            <Tooltip content={<LiveTooltip />} />
+            <Line type="monotone" dataKey="value" name={label} stroke={color} strokeWidth={2.5} dot={false} />
+          </LineChart>
+        </ResponsiveContainer>
+      </ClientOnly>
+      <div className="-mt-2 flex items-center justify-between text-[11px]">
+        <span className="text-[var(--muted)]">{label}</span>
+        <span className="font-semibold text-[#000000]">
+          {data[data.length - 1]?.value}
+          {unit}
+        </span>
+      </div>
+    </div>
+  );
 }
 
 export function Turing10Panel({ data }: { data: Turing10Result }) {
@@ -658,6 +775,11 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
     { name: "잔여 리스크", value: 100 - governanceCoverage, fill: "#E6ECF8" },
   ];
 
+  const safetyMixData = [
+    { name: "안전 기준 충족", value: Math.round(turing30.anthropomorphic.safety), fill: "#0A2465" },
+    { name: "보완 필요", value: 100 - Math.round(turing30.anthropomorphic.safety), fill: "#E6ECF8" },
+  ];
+
   const workforceMixData = [
     { name: "절감 시간", value: Math.round(recruiterHoursSaved), fill: "#0A2465" },
     { name: "남은 수동 시간", value: Math.round((currentMinutesPerApplication * monthlyApplications) / 60), fill: "#C6CEDF" },
@@ -689,6 +811,36 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
     { name: "Fri", value: 67, color: "#5B6B95" },
     { name: "Sat", value: 52, color: "#C6CEDF" },
     { name: "Sun", value: 49, color: "#C6CEDF" },
+  ];
+
+  const liveFlowData = [
+    { time: "09:00", screening: 28, review: 18, queue: 10 },
+    { time: "09:05", screening: 54, review: 24, queue: 22 },
+    { time: "09:10", screening: 36, review: 21, queue: 12 },
+    { time: "09:15", screening: 68, review: 31, queue: 26 },
+    { time: "09:20", screening: 41, review: 20, queue: 11 },
+    { time: "09:25", screening: 74, review: 34, queue: 29 },
+    { time: "09:30", screening: 46, review: 23, queue: 15 },
+  ];
+
+  const latencyTrendData = [
+    { time: "09:00", value: 148 },
+    { time: "09:05", value: 236 },
+    { time: "09:10", value: 164 },
+    { time: "09:15", value: 282 },
+    { time: "09:20", value: 156 },
+    { time: "09:25", value: 248 },
+    { time: "09:30", value: 172 },
+  ];
+
+  const tokenTrendData = [
+    { time: "09:00", value: 96 },
+    { time: "09:05", value: 144 },
+    { time: "09:10", value: 108 },
+    { time: "09:15", value: 158 },
+    { time: "09:20", value: 102 },
+    { time: "09:25", value: 149 },
+    { time: "09:30", value: 118 },
   ];
 
   const pipelineTable = [
@@ -768,32 +920,46 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
         </div>
       </div>
 
+      <div className="grid gap-4 xl:grid-cols-[1.35fr_0.65fr]">
+        <Card>
+          <CardHeader title="실시간 운영 흐름" sub="자동 평가, 사람 검토, 대기열이 함께 움직이는 흐름" />
+          <CardBody className="pt-0">
+            <LiveAreaPanel data={liveFlowData} />
+          </CardBody>
+        </Card>
+
+        <div className="grid gap-4">
+          <Card>
+            <CardHeader title="응답 시간 추이" sub="최근 30분" />
+            <CardBody className="pt-0">
+              <LiveLinePanel data={latencyTrendData} label="Latency" color="#0A2465" unit="ms" />
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader title="토큰 비용 추이" sub="건당 추정 비용" />
+            <CardBody className="pt-0">
+              <LiveLinePanel data={tokenTrendData} label="Token cost" color="#5B6B95" unit="" />
+            </CardBody>
+          </Card>
+        </div>
+      </div>
+
       <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-6">
-        {statTiles.map((tile) => (
-          <div
-            key={tile.label}
-            className="rounded-[16px] border border-[var(--border)] bg-white px-4 py-3 shadow-[0_10px_24px_rgba(10,36,101,0.04)]"
-          >
-            <div className="text-[10px] uppercase tracking-[0.14em] text-[var(--muted)]">
-              {tile.label}
-            </div>
-            <div className={`mt-1 text-[24px] font-semibold tracking-[-0.04em] ${tile.tone}`}>
-              {tile.value}
-            </div>
-          </div>
-        ))}
+
       </div>
 
       <div className="grid gap-4 xl:grid-cols-[1.1fr_0.9fr]">
         <Card>
           <CardHeader title="운영 상태 개요" sub="텍스트보다 차트로 먼저 읽는 요약" />
-          <CardBody className="grid gap-4 pt-0 md:grid-cols-2">
+          <CardBody className="grid gap-3 pt-0 md:grid-cols-3">
             <div className="rounded-[18px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4">
               <DonutChart
                 data={productivityMixData}
                 tooltipLabel="%"
                 centerLabel="Automation"
                 centerValue={`${automationRate}%`}
+                size="sm"
               />
             </div>
             <div className="rounded-[18px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4">
@@ -802,6 +968,16 @@ export function Turing50Panel({ report }: { report: HrEvaluationReport }) {
                 tooltipLabel="%"
                 centerLabel="Governance"
                 centerValue={`${governanceCoverage}%`}
+                size="sm"
+              />
+            </div>
+            <div className="rounded-[18px] border border-[var(--border)] bg-[rgba(10,36,101,0.02)] p-4">
+              <DonutChart
+                data={safetyMixData}
+                tooltipLabel="%"
+                centerLabel="Safety"
+                centerValue={`${Math.round(turing30.anthropomorphic.safety)}%`}
+                size="sm"
               />
             </div>
           </CardBody>
